@@ -10,6 +10,7 @@ use Repository\UserRepository;
 use Service\SessionService;
 use Service\UserService;
 use App\View;
+use App\Flasher;
 
 class UserController
 {
@@ -48,8 +49,7 @@ class UserController
             $this->sessionService->create($result->user->id);
             View::redirect("/");
         } catch (ValidationException $e) {
-//            alert
-
+            Flasher::setFlash("register failed : " . $e->getMessage());
             View::redirect("/register");
         }
     }
