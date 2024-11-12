@@ -4,6 +4,7 @@ namespace Controller;
 
 use Config\Database;
 use Exception\ValidationException;
+use Model\UserLoginRequest;
 use Model\UserRegisterRequest;
 use Repository\SessionRepotisory;
 use Repository\UserRepository;
@@ -51,6 +52,29 @@ class UserController
         } catch (ValidationException $e) {
             Flasher::setFlash("register failed : " . $e->getMessage());
             View::redirect("/register");
+        }
+    }
+
+    public function login(): void
+    {
+        View::render("login", [
+            "title" => "Login",
+        ]);
+    }
+
+    public function postLogin(): void
+    {
+        try {
+            $request = new UserLoginRequest();
+            $request->email = $_POST["email"];
+            $request->password = $_POST["password"];
+
+            $response = $this->userService->login($request);
+            $this->sessionService->create($response->user->id);
+            View::redirect("/");
+        } catch (ValidationException $e) {
+            Flasher::setFlash("login failed : " . $e->getMessage());
+            View::redirect("/login");
         }
     }
 

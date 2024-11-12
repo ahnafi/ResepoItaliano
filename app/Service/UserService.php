@@ -5,6 +5,8 @@ namespace Service;
 use Config\Database;
 use Domain\User;
 use Exception\ValidationException;
+use Model\UserLoginRequest;
+use Model\UserLoginResponse;
 use Model\UserRegisterRequest;
 use Model\UserRegisterResponse;
 use Repository\UserRepository;
@@ -31,9 +33,9 @@ class UserService
         try {
             Database::beginTransaction();
 
-            $user = $this->userRepository->findByField("email",$request->email);
+            $user = $this->userRepository->findByField("email", $request->email);
 
-            if($user){
+            if ($user) {
                 throw new ValidationException("User already exists");
             }
 
@@ -48,7 +50,7 @@ class UserService
             $response = new UserRegisterResponse();
             $response->user = $result;
             return $response;
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             Database::rollbackTransaction();
             throw $exception;
         }
@@ -57,13 +59,40 @@ class UserService
 
     private function ValidateUserRegiterRequest(UserRegisterRequest $request): void
     {
-        if ($request->username == "" || $request->email == "" || $request->password == "") {
+        if ($request->username == "" || $request->email == "" || $request->password == "" || empty($request->username) || empty($request->email) || empty($request->password)) {
             throw new ValidationException("Username , email, password is required");
         }
 
-        if($this->isValidEmail($request->email)){
+        if (!$this->isValidEmail($request->email)) {
             throw new ValidationException("Your email is not valid");
         }
+    }
+
+    public function login(UserLoginRequest $request): UserLoginResponse
+    {
+        $this->ValidateUserLoginRequest($request);
+
+        $user = $this->userRepository->findByField("email", $request->email);
+        if ($user == null) {
+            throw new ValidationException("Email or password is not correct");
+        }
+
+        if (password_verify($request->password, $user->password)) {
+            $response = new UserLoginResponse();
+            $response->user = $user;
+            return $response;
+        } else {
+            throw new ValidationException("Email or password is not correct");
+        }
+
+    }
+
+    private function ValidateUserLoginRequest(UserLoginRequest $request): void
+    {
+        if ($request->password == "" || empty($request->password) || empty($request->email) || $request->email == "") {
+            throw new ValidationException("Username or password is required");
+        }
+        if (!$this->isValidEmail($request->email)) throw new ValidationException("Email is not valid");
     }
 
 }
