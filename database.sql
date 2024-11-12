@@ -15,5 +15,5 @@ CREATE TABLE sessions
 (
     session_id      VARCHAR(255) PRIMARY KEY,
     user_id VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );

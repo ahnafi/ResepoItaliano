@@ -5,7 +5,9 @@ namespace Controller;
 use Config\Database;
 use Exception\ValidationException;
 use Model\UserRegisterRequest;
+use Repository\SessionRepotisory;
 use Repository\UserRepository;
+use Service\SessionService;
 use Service\UserService;
 use App\View;
 
@@ -13,6 +15,7 @@ class UserController
 {
 
     private UserService $userService;
+    private SessionService $sessionService;
 
     public function __construct()
     {
@@ -20,26 +23,31 @@ class UserController
 
         $userRepository = new UserRepository($connection);
         $this->userService = new UserService($userRepository);
+
+        $sessionRepository = new SessionRepotisory($connection);
+        $this->sessionService = new SessionService($sessionRepository, $userRepository);
     }
 
-    public function register():void {
-        View::render("register",[
+    public function register(): void
+    {
+        View::render("register", [
             "title" => "Register",
         ]);
     }
 
-    public function postRegister():void {
-        try{
-
+    public function postRegister(): void
+    {
+        try {
             $request = new UserRegisterRequest();
             $request->username = $_POST["username"];
             $request->email = $_POST["email"];
             $request->password = $_POST["password"];
 
-            $this->userService->register($request);
-
+            $result = $this->userService->register($request);
+            //langsung login
+            $this->sessionService->create($result->user->id);
             View::redirect("/");
-        }catch (ValidationException $e){
+        } catch (ValidationException $e) {
 //            alert
 
             View::redirect("/register");

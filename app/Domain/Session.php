@@ -2,9 +2,9 @@
 
 namespace Domain;
 
-class session
+class Session
 {
-    public string $id;
+    public string $sessionId;
     public string $userId;
 
 }
