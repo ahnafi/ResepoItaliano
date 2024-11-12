@@ -100,7 +100,7 @@ class UserService
     public function update(UserUpdateRequest $request)
     {
         $this->ValidateUserUpdateRequest($request);
-        $pathFile = "./../../public/img/profiles/";
+        $pathFile = __DIR__ . "./../../public/img/profiles/";
 
         try {
             Database::beginTransaction();
