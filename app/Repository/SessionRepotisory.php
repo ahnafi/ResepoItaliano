@@ -1,7 +1,9 @@
 <?php
 
 namespace Repository;
-use Domain\session;
+
+use Domain\Session;
+use Exception\ValidationException;
 
 class SessionRepotisory
 {
@@ -19,10 +21,14 @@ class SessionRepotisory
         return $session;
     }
 
-    public function findById(string $id): ?Session
+    public function find(string $field,$value): ?Session
     {
-        $statement = $this->connection->prepare("SELECT session_id, user_id from sessions WHERE session_id = ?");
-        $statement->execute([$id]);
+        if(!in_array($field,['session_id','user_id'])){
+            throw new ValidationException("Session id or user id is invalid");
+        }
+
+        $statement = $this->connection->prepare("SELECT session_id, user_id from sessions WHERE $field = ?");
+        $statement->execute([$value]);
 
         try {
             if ($row = $statement->fetch()) {

@@ -22,6 +22,8 @@ class SessionService
 
     public function create(int $userId): Session
     {
+        if ($row = $this->sessionRepository->find("user_id", $userId)) $this->sessionRepository->deleteById($row->sessionId);
+
         $session = new session();
         $session->sessionId = uniqid();
         $session->userId = $userId;
@@ -43,10 +45,10 @@ class SessionService
 
     public function current(): ?User
     {
-        $sessionId = $_SESSION[self::$SESSION_NAME] ?? null;
-        $session = $this->sessionRepository->findById($sessionId);
+        $sessionId = $_SESSION[self::$SESSION_NAME] ?? "";
+        $session = $this->sessionRepository->find("session_id", $sessionId);
 
-        if ($session === null) {
+        if ($session == null) {
             return null;
         }
 
