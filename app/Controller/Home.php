@@ -9,5 +9,8 @@ class Home {
     public function home() {
         View::render("index",[]);
     }
+    public function about() {
+        View::render("about",[]);
+    }
 
 }
