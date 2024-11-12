@@ -9,6 +9,8 @@ use Model\UserLoginRequest;
 use Model\UserLoginResponse;
 use Model\UserRegisterRequest;
 use Model\UserRegisterResponse;
+use Model\UserUpdateRequest;
+use Model\UserUpdateResponse;
 use Repository\UserRepository;
 
 class UserService
@@ -93,6 +95,68 @@ class UserService
             throw new ValidationException("Username or password is required");
         }
         if (!$this->isValidEmail($request->email)) throw new ValidationException("Email is not valid");
+    }
+
+    public function update(UserUpdateRequest $request)
+    {
+        $this->ValidateUserUpdateRequest($request);
+        $pathFile = "./../../public/img/profiles/";
+
+        try {
+            Database::beginTransaction();
+
+            $user = $this->userRepository->findByField("user_id", $request->userId);
+
+            if ($user == null) {
+                throw new ValidationException("User not found");
+            }
+
+            $user->username = $request->username;
+
+            if ($user->profile != null && $request->photo != null) {
+                unlink($pathFile . $user->profile);
+            }
+
+            if ($request->photo && isset($request->photo["tmp_name"])) {
+                $extension = pathinfo($request->photo["name"], PATHINFO_EXTENSION);
+                $photoName = uniqid() . "." . $extension;
+
+                move_uploaded_file($request->photo["tmp_name"], $pathFile . $photoName);
+
+                $user->profile = $photoName;
+            }
+
+            $this->userRepository->update($user);
+
+            Database::commitTransaction();
+            $response = new UserUpdateResponse();
+            $response->user = $user;
+            return $response;
+
+        } catch (\Exception $exception) {
+            Database::rollbackTransaction();
+            throw $exception;
+        }
+    }
+
+    private function ValidateUserUpdateRequest(UserUpdateRequest $request): void
+    {
+        if ($request->userId == "" || empty($request->userId) || $request->username == "") {
+            throw new ValidationException("Username is required");
+        }
+
+        if (getimagesize($request->photo["tmp_name"]) === false) {
+            throw new ValidationException("File must be a image");
+        }
+
+        if (!in_array($request->photo["type"], ['image/jpeg', "image/jpg", 'image/png', 'image/gif'])) {
+            throw new ValidationException("Invalid image type");
+        }
+
+        if ($request->photo["size"] > 2 * 1024 * 1024) {
+            throw new ValidationException("File size too large\nMax file size 2 MB");
+        }
+
     }
 
 }

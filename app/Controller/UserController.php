@@ -6,6 +6,7 @@ use Config\Database;
 use Exception\ValidationException;
 use Model\UserLoginRequest;
 use Model\UserRegisterRequest;
+use Model\UserUpdateRequest;
 use Repository\SessionRepotisory;
 use Repository\UserRepository;
 use Service\SessionService;
@@ -75,6 +76,46 @@ class UserController
         } catch (ValidationException $e) {
             Flasher::setFlash("login failed : " . $e->getMessage());
             View::redirect("/login");
+        }
+    }
+
+    public function update(): void
+    {
+        $user = $this->sessionService->current();
+
+        $model = [
+            "title" => "Update profile",
+            "user" => [
+                "id" => $user->id,
+                "username" => $user->username,
+                "email" => $user->email,
+                "photo_profile" => $user->profile
+            ],
+        ];
+
+        View::render("update", $model);
+    }
+
+    public function postUpdate(): void
+    {
+        $user = $this->sessionService->current();
+
+        try {
+
+            $request = new UserUpdateRequest();
+            $request->username = $_POST["username"];
+            if (isset($_FILES['profile']) && $_FILES['profile']['error'] == UPLOAD_ERR_OK) {
+                $request->photo = $_FILES['profile'];
+            } else {
+                $request->photo = null;
+            }
+
+            $this->userService->update($request);
+            Flasher::setFlash("profile updated successfully");
+            View::redirect("/profile");
+        } catch (ValidationException $e) {
+            Flasher::setFlash("update failed : " . $e->getMessage());
+            View::redirect("/update");
         }
     }
 
