@@ -129,7 +129,7 @@ class UserController
             $request->password = $_POST["newPassword"];
             $request->oldPassword = $_POST["oldPassword"];
             $request->password_confirmation = $_POST["confirmPassword"];
-            $request->id = $user->id;
+            $request->userId = $user->id;
 
             $this->userService->updatePassword($request);
 
@@ -139,6 +139,12 @@ class UserController
             Flasher::setFlash("update password failed : " . $e->getMessage());
             View::redirect("/profile");
         }
+    }
+
+    public function logout(): void
+    {
+        $this->sessionService->destroy();
+        View::redirect("/");
     }
 
 }
