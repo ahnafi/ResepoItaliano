@@ -8,5 +8,5 @@ class User
     public string $username;
     public string $email;
     public string $password;
-    public ?string $profile = null;
+    public ?string $profileImage = null;
 }

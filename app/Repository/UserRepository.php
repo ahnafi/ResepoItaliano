@@ -29,7 +29,7 @@ class UserRepository
             throw new ValidationException("Field {$field} not exist");
         }
 
-        $statement = $this->connection->prepare("SELECT user_id , username, email , password, profile FROM users WHERE $field = ?");
+        $statement = $this->connection->prepare("SELECT user_id , username, email , password, profile_image FROM users WHERE $field = ?");
         $statement->execute([$value]);
 
         try {
@@ -40,7 +40,7 @@ class UserRepository
                 $user->username = $row['username'];
                 $user->email = $row['email'];
                 $user->password = $row['password'];
-                $user->profile = $row['profile'];
+                $user->profileImage = $row['profile_image'];
                 return $user;
             } else {
                 return null;
@@ -53,8 +53,8 @@ class UserRepository
 
     public function update(User $user): User
     {
-        $statement = $this->connection->prepare("UPDATE users SET username = ?, password = ?,profile = ? WHERE user_id = ?");
-        $statement->execute([$user->username, $user->password, $user->profile, $user->id]);
+        $statement = $this->connection->prepare("UPDATE users SET username = ?, password = ?,profile_image = ? WHERE user_id = ?");
+        $statement->execute([$user->username, $user->password, $user->profileImage, $user->id]);
         return $user;
     }
 

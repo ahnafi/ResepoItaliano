@@ -114,8 +114,8 @@ class UserService
 
             $user->username = $request->username;
 
-            if ($user->profile != null && $request->photo != null) {
-                unlink($pathFile . $user->profile);
+            if ($user->profileImage != null && $request->photo != null) {
+                unlink($pathFile . $user->profileImage);
             }
 
             if ($request->photo && isset($request->photo["tmp_name"])) {
@@ -124,7 +124,7 @@ class UserService
 
                 move_uploaded_file($request->photo["tmp_name"], $pathFile . $photoName);
 
-                $user->profile = $photoName;
+                $user->profileImage = $photoName;
             }
 
             $this->userRepository->update($user);
