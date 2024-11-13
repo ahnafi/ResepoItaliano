@@ -7,6 +7,7 @@ use Domain\User;
 use Exception\ValidationException;
 use Model\UserLoginRequest;
 use Model\UserLoginResponse;
+use Model\UserPasswordRequest;
 use Model\UserRegisterRequest;
 use Model\UserRegisterResponse;
 use Model\UserUpdateRequest;
@@ -97,7 +98,7 @@ class UserService
         if (!$this->isValidEmail($request->email)) throw new ValidationException("Email is not valid");
     }
 
-    public function update(UserUpdateRequest $request)
+    public function update(UserUpdateRequest $request): UserUpdateResponse
     {
         $this->ValidateUserUpdateRequest($request);
         $pathFile = __DIR__ . "./../../public/img/profiles/";
@@ -157,6 +158,53 @@ class UserService
             throw new ValidationException("File size too large\nMax file size 2 MB");
         }
 
+    }
+
+    public function updatePassword(UserPasswordRequest $request): UserUpdateResponse
+    {
+        $this->ValidateUserPasswordRequest($request);
+
+        try {
+            Database::beginTransaction();
+
+            $user = $this->userRepository->findByField("user_id", $request->userId);
+
+            if ($user == null) {
+                throw new ValidationException("User not found");
+            }
+
+            if (!password_verify($request->oldPassword, $user->password)) {
+                throw new ValidationException("Old password is not correct");
+            }
+
+            $user->password = password_hash($request->password, PASSWORD_BCRYPT);
+
+            $this->userRepository->update($user);
+
+            Database::commitTransaction();
+            $response = new UserUpdateResponse();
+            $response->user = $user;
+            return $response;
+
+        } catch (\Exception $exception) {
+            Database::rollbackTransaction();
+            throw $exception;
+        }
+    }
+
+    private function ValidateUserPasswordRequest(UserPasswordRequest $request): void
+    {
+        if ($request->password == "" || $request->userId == "" || empty($request->id) || empty($request->oldPassword) || $request->oldPassword == "" || empty($request->password)) {
+            throw new ValidationException("new Password is required");
+        }
+
+        if ($request->password == $request->oldPassword) {
+            throw new ValidationException("Old password can not be same as new password");
+        }
+
+        if ($request->password != $request->password_confirmation) {
+            throw new ValidationException("Passwords do not match");
+        }
     }
 
 }

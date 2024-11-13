@@ -5,6 +5,7 @@ namespace Controller;
 use Config\Database;
 use Exception\ValidationException;
 use Model\UserLoginRequest;
+use Model\UserPasswordRequest;
 use Model\UserRegisterRequest;
 use Model\UserUpdateRequest;
 use Repository\SessionRepotisory;
@@ -116,6 +117,27 @@ class UserController
         } catch (ValidationException $e) {
             Flasher::setFlash("update failed : " . $e->getMessage());
             View::redirect("/update");
+        }
+    }
+
+    public function postPassword(): void
+    {
+        $user = $this->sessionService->current();
+
+        try {
+            $request = new UserPasswordRequest();
+            $request->password = $_POST["newPassword"];
+            $request->oldPassword = $_POST["oldPassword"];
+            $request->password_confirmation = $_POST["confirmPassword"];
+            $request->id = $user->id;
+
+            $this->userService->updatePassword($request);
+
+            Flasher::setFlash("password updated successfully");
+            View::redirect("/profile");
+        } catch (ValidationException $e) {
+            Flasher::setFlash("update password failed : " . $e->getMessage());
+            View::redirect("/profile");
         }
     }
 
