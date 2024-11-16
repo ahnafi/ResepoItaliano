@@ -34,7 +34,7 @@ class UserController
 
     public function register(): void
     {
-        View::render("register", [
+        View::render("User/register", [
             "title" => "Register",
         ]);
     }
@@ -59,7 +59,7 @@ class UserController
 
     public function login(): void
     {
-        View::render("login", [
+        View::render("User/login", [
             "title" => "Login",
         ]);
     }
@@ -90,7 +90,7 @@ class UserController
                 "id" => $user->id,
                 "username" => $user->username,
                 "email" => $user->email,
-                "photo_profile" => $user->profile
+                "photo_profile" => $user->profileImage
             ],
         ];
 

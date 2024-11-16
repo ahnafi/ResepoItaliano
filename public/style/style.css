@@ -1,0 +1,879 @@
+/* Navigation Start */
+/* Navigation Container */
+.navigation-container {
+    padding: 12px 24px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+    background-color: var(--amber-base);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+/* Navigation Bar */
+.navigation-bar {
+    display: flex;
+    max-width: 1024px;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo */
+nav .logo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+nav .logo img {
+    width: 48px;
+    height: 48px;
+}
+
+nav .logo span {
+    font-weight: 700;
+}
+
+/* Navigation Links */
+.navigation-links-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.navigation-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.navigation-links a {
+    font-weight: 700;
+}
+
+.register-button,
+.login-button {
+    padding: 8px 16px;
+    border: none;
+    background-color: var(--dark-base);
+    color: var(--light-base);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-button {
+    background-color: transparent;
+    border: 2px solid var(--dark-base);
+    color: var(--dark-base);
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background-color: var(--dark-base);
+    border-radius: 2px;
+}
+
+.profile-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.profile-photo span {
+    display: none;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 640px) {
+    /* Hide regular navigation links */
+    .navigation-links-container {
+        display: none;
+        gap: 16px;
+        position: absolute;
+        top: -100px;
+        left: 0;
+        right: 0;
+        background-color: var(--amber-base);
+        padding: 0px 24px 12px;
+    }
+
+    .navigation-links {
+        flex-direction: column;
+        align-items: normal;
+        gap: 8px;
+    }
+
+    /* Show hamburger menu */
+    .hamburger-menu {
+        display: flex;
+    }
+
+    /* Show menu when clicked */
+    .navigation-container.active .navigation-links-container {
+        display: block;
+        top: 72px;
+    }
+
+    .navigation-container.active .navigation-links-container a {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .navigation-container.active .navigation-links-container a.profile-photo {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .profile-photo span {
+        display: inline-block;
+    }
+}
+
+/* Navigation End */
+
+/* Footer Start */
+/* Footer Container */
+.footer-container {
+    width: 100%;
+    background-color: var(--dark-base);
+    color: var(--light-base);
+}
+
+.footer {
+    display: flex;
+    max-width: 1024px;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 24px;
+}
+
+.footer a {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    color: var(--light-base);
+    font-weight: 700;
+}
+
+.footer > a > img {
+    width: 48px;
+    height: 48px;
+}
+
+.social-medias {
+    display: flex;
+    justify-content: space-between;
+    gap: 36px;
+}
+
+.social-medias a svg {
+    width: 24px;
+    height: 24px;
+    color: var(--light-base);
+}
+
+@media screen and (max-width: 640px) {
+    .footer {
+        flex-direction: column;
+    }
+}
+
+/* Footer End */
+
+/* Register Start */
+/* Registration Container */
+.register-container {
+    max-width: 1024px;
+    margin: 128px auto 72px;
+    background-color: var(--light-base);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.greeting-container {
+    max-width: 512px;
+    padding: 24px;
+    background-color: var(--amber-base);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+}
+
+.greeting-container a {
+    padding: 8px 16px;
+    background-color: var(--dark-base);
+    color: var(--light-base);
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.register-form {
+    margin: auto;
+    text-align: center;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.register-form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.register-form-body input {
+    font-family: "Nunito", sans-serif;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+}
+
+.register-form-body input[type="submit"] {
+    background-color: var(--green-base);
+    color: var(--light-base);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 640px) {
+    .register-container {
+        flex-direction: column;
+        margin: 96px 8px 48px;
+    }
+
+    .greeting-container {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .register-container {
+        margin: 96px 24px 48px;
+    }
+}
+
+/* Register End */
+
+/* Login Start */
+.login-container {
+    max-width: 1024px;
+    min-height: 480px;
+    margin: 128px auto 72px;
+    background-color: var(--light-base);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row-reverse;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.greeting-container {
+    max-width: 512px;
+    padding: 24px;
+    background-color: var(--amber-base);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+}
+
+.greeting-container a {
+    padding: 8px 16px;
+    background-color: var(--dark-base);
+    color: var(--light-base);
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.login-form {
+    margin: auto;
+    text-align: center;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.login-form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.login-form-body input {
+    font-family: "Nunito", sans-serif;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+}
+
+.login-form-body input[type="submit"] {
+    background-color: var(--green-base);
+    color: var(--light-base);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 640px) {
+    .login-container {
+        flex-direction: column;
+        margin: 96px 8px 48px;
+    }
+
+    .greeting-container {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .login-container {
+        margin: 96px 24px 48px;
+    }
+}
+
+/* Login End */
+
+/* About Us Start */
+
+/* Hero Section Start */
+.hero-about-us-container {
+    position: relative;
+    min-height: 512px;
+    padding: 196px 8px;
+    background-color: rgba(15, 23, 42, 1);
+}
+
+.hero-about-us-container::before {
+    content: "";
+    background-image: url("./images/backgrounds/italian-foods.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.6; /* Adjust the opacity as needed */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.hero-about-us-container > * {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-about-us {
+    gap: 16px;
+    color: var(--light-base);
+    max-width: 1024px;
+    margin: auto;
+}
+
+.hero-about-us-content {
+    max-width: 640px;
+}
+
+.hero-about-us-content h1 {
+    font-weight: 700;
+}
+
+.hero-about-us-content h1,
+.hero-about-us-content h2 {
+    margin-bottom: 4px;
+}
+
+.hero-about-us-content p {
+    margin-bottom: 16px;
+}
+
+.hero-about-us-content .explore-recipes-link {
+    background-color: var(--green-base);
+    font-weight: 700;
+    color: var(--light-base);
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+@media screen and (max-width: 640px) {
+    .hero-about-us-container {
+        padding: 128px 8px 72px;
+    }
+
+    .hero-about-us-content p {
+        text-align: justify;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .hero-about-us-container {
+        padding: 128px 24px 72px;
+    }
+}
+
+/* Hero Section End */
+
+/* Achievements Start */
+.achievements-container {
+    background-color: var(--green-base);
+    padding: 24px 0;
+}
+
+.achievements {
+    max-width: 1024px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+}
+
+.achievement {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--light-base);
+}
+
+.achievement svg {
+    width: 48px;
+    height: 48px;
+    display: none;
+}
+
+.achievement h3 {
+    font-weight: 700;
+}
+
+.achievement p {
+    text-align: justify;
+}
+
+@media screen and (max-width: 1024px) {
+    .achievements-container {
+        padding: 24px;
+    }
+
+    .achievements {
+        gap: 12px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .achievements {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .achievement svg {
+        display: none;
+    }
+}
+
+/* Achievements End */
+
+/* Features Start */
+.features-container {
+    padding: 24px 0;
+}
+
+.features {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.features-head h2 {
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.features-body {
+    display: flex;
+    gap: 24px;
+}
+
+.features-body .feature {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: var(--green-base);
+    color: var(--light-base);
+    padding: 12px;
+    border-radius: 12px;
+    flex: 1;
+}
+
+.features-body .feature h2 {
+    font-weight: 700;
+}
+
+.features-body .feature svg {
+    width: 48px;
+    height: 48px;
+}
+
+@media screen and (max-width: 1024px) {
+    .features-container {
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .features-body {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .features-body .feature svg {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* Features End */
+
+/* Testimonials Start */
+.testimonials-container {
+    padding: 24px 0;
+    background-color: var(--dark-base);
+}
+
+.testimonials {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.testimonials-head {
+    color: var(--light-base);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.testimonials-body {
+    display: flex;
+    gap: 24px;
+    text-align: justify;
+}
+
+.testimonials-body .testimonial {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: var(--amber-base);
+    color: var(--light-base);
+    padding: 12px;
+    border-radius: 12px;
+    flex: 1;
+}
+
+.testimonials-body .testimonial .testimonial-profile {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.testimonials-body .testimonial .testimonial-profile img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.testimonials-body .testimonial .testimonial-name {
+    font-weight: 700;
+}
+
+.testimonials-body .testimonial svg {
+    width: 48px;
+    height: 48px;
+}
+
+@media screen and (max-width: 1024px) {
+    .testimonials-container {
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .testimonials-body {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .testimonials-body .feature svg {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* Testimonials End */
+
+/* Invitation Start */
+.invitation-container {
+    padding: 24px 0;
+}
+
+.invitation {
+    max-width: 1024px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.invitation-content {
+    max-width: 640px;
+}
+
+.invitation-content h2 {
+    font-weight: 700;
+}
+
+.invitation-content h2 > span {
+    background-color: var(--amber-base);
+}
+
+.invitation-content p {
+    text-align: justify;
+    margin-bottom: 16px;
+}
+
+.invitation-content .join-link {
+    background-color: var(--amber-base);
+    font-weight: 700;
+    color: var(--light-base);
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.invitation-image img {
+    width: 256px;
+}
+
+@media screen and (max-width: 1024px) {
+    .invitation-container {
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .invitation {
+        flex-direction: column;
+        gap: 12px;
+        position: relative;
+    }
+
+    .invitation-image img {
+        top: -24px;
+        right: 0;
+        width: 128px;
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+/* Invitation End */
+/* About Us End */
+
+/* Homepage Start */
+/* Hero Section Start */
+.hero-homepage-container {
+    position: relative;
+    min-height: 512px;
+    padding: 196px 8px;
+    background: url("../images/elements/italian-foods.png") center/cover no-repeat;
+}
+
+.hero-homepage {
+    gap: 16px;
+    color: var(--light-base);
+    max-width: 1024px;
+    margin: auto;
+}
+
+.hero-homepage-content {
+    max-width: 640px;
+}
+
+.hero-homepage-content h1 {
+    font-weight: 700;
+}
+
+.hero-homepage-content span {
+    background-color: var(--amber-base);
+    color: var(--dark-base);
+}
+
+.hero-homepage-content p {
+    margin-bottom: 16px;
+}
+
+.hero-homepage-content a {
+    background-color: var(--amber-base);
+    font-weight: 700;
+    color: var(--dark-base);
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
+/* Homepage End */
+
+/* Categories Start */
+.categories-container {
+    padding: 24px 8px;
+}
+
+.categories {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.categories h2 {
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.categories-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.categories-list .category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 24px;
+    flex: 1;
+    border: 3px solid var(--green-base);
+    background-color: rgba(22, 163, 74, 0.1);
+}
+
+@media screen and (max-width: 640px) {
+    .categories-list {
+        gap: 8px;
+    }
+
+    .categories-list .category-item {
+        max-width: 128px;
+        flex: 1;
+    }
+
+    .categories-list .category-item img {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+/* Categories End */
+
+/* Recipes Start */
+.recipes-container {
+    padding: 24px 8px;
+}
+
+.recipes {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.recipes h2 {
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.recipes-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+    gap: 24px;
+}
+
+.recipe-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 24px;
+    border: 3px solid var(--green-base);
+    background-color: rgba(22, 163, 74, 0.1);
+}
+
+.recipe-item .user-recipe {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-weight: 700;
+}
+
+.recipe-item .user-recipe img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.recipe-item img {
+    width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.recipe-item h3 {
+    font-weight: 700;
+}
+
+.recipe-item p {
+    text-align: justify;
+}
+
+.recipe-time-past svg {
+    width: 20px;
+    height: 20px;
+}
+
+.recipe-time-past {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    font-weight: 300;
+}
+
+@media screen and (max-width: 640px) {
+    .recipes-list {
+        grid-template-columns: 1fr;
+    }
+
+    .recipe-item img {
+        width: 100%;
+        height: 128px;
+    }
+}
+
+/* Recipes End */

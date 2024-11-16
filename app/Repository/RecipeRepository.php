@@ -3,6 +3,7 @@
 namespace Repository;
 
 use Domain\Recipe;
+use Exception\ValidationException;
 use Model\RecipeSearchParams;
 use Model\RecipeSearchResponse;
 
@@ -108,10 +109,15 @@ class RecipeRepository
 
         // Query untuk mengambil data dengan LIMIT dan OFFSET
         $query = "
-        SELECT recipes.*, categories.name AS category_name
-        FROM recipes
-        INNER JOIN categories ON recipes.category_id = categories.category_id
-        WHERE 1=1
+    SELECT 
+        recipes.*, 
+        categories.name AS category_name,
+        users.username AS user_username,
+        users.profile_image AS user_profile_image
+    FROM recipes
+    INNER JOIN categories ON recipes.category_id = categories.category_id
+    INNER JOIN users ON recipes.user_id = users.user_id
+    WHERE 1=1
     ";
 
         if ($params->title !== null) {
@@ -154,7 +160,13 @@ class RecipeRepository
             $recipe->createdAt = $row['created_at'];
             $recipe->categoryName = $row['category_name'];
 
-            $recipes[] = $recipe;
+            $recipes[] = [
+                "recipe" => $recipe,
+                "user" => [
+                    "username" => $row['user_username'],
+                    "profile_image" => $row['user_profile_image'],
+                ]
+            ];
         }
 
         // Return data resep dan total count
@@ -163,6 +175,5 @@ class RecipeRepository
         $result->recipes = $recipes;
         return $result;
     }
-
 
 }

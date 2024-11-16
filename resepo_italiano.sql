@@ -18,6 +18,21 @@ CREATE TABLE sessions
     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
+CREATE TABLE categories
+(
+    category_id   INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL
+);
+
+INSERT INTO categories (categories.category_name)
+VALUES ('Pizza'),
+       ('Pasta'),
+       ('Risotto'),
+       ('Gelato'),
+       ('Tiramisu'),
+       ('Burrata'),
+       ('Bruschetta');
+
 CREATE TABLE recipes
 (
     recipe_id   INT AUTO_INCREMENT PRIMARY KEY,
@@ -42,23 +57,10 @@ CREATE TABLE recipe_images
     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id) ON DELETE CASCADE
 );
 
-CREATE TABLE categories
-(
-    category_id INT AUTO_INCREMENT PRIMARY KEY,
-    category_name        VARCHAR(50) NOT NULL
-);
 
-INSERT INTO categories (categories.category_name)
-VALUES ('Pizza'),
-       ('Pasta'),
-       ('Risotto'),
-       ('Gelato'),
-       ('Tiramisu'),
-       ('Burrata'),
-       ('Bruschetta');
-
-CREATE TABLE saved_recepies
+CREATE TABLE saved_recipes
 (
+    saved_id  INT AUTO_INCREMENT PRIMARY KEY,
     recipe_id INT NOT NULL,
     user_id   INT NOT NULL,
 

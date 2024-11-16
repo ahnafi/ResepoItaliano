@@ -56,7 +56,7 @@ class RecipeService
             $banner = null;
 
             if (!empty($request->photos)) {
-                $uploadDir = __DIR__ . "/../../public/img/recipes/";
+                $uploadDir = __DIR__ . "/../../public/images/recipes/";
 
                 foreach ($request->photos["tmp_name"] as $index => $tmp) {
 
@@ -203,7 +203,7 @@ class RecipeService
             }
 
             $images = $this->recipeImageRepository->findByRecipe($recipe->recipeId);
-            $dirfile = __DIR__ . "/../../public/img/recipes/";
+            $dirfile = __DIR__ . "/../../public/images/recipes/";
             foreach ($images as $image) {
                 $pathImg = $dirfile . $image->imageName;
 

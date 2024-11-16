@@ -1,0 +1,97 @@
+/* Variables Declation */
+:root {
+    --light-base: #f1f5f9;
+    --dark-base: #0f172a;
+    --green-base: #15803d;
+    --amber-base: #f59e0b;
+}
+
+.normal-font-size {
+    font-size: 0.875rem;
+}
+
+@media screen and (min-width: 768px) {
+    .normal-font-size {
+        font-size: 1rem;
+    }
+}
+
+.big-normal-font-size {
+    font-size: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+    .big-normal-font-size {
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .big-normal-font-size {
+        font-size: 1.5rem;
+    }
+}
+
+.title-font-size {
+    font-size: 1.5rem;
+}
+
+@media screen and (min-width: 768px) {
+    .title-font-size {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .title-font-size {
+        font-size: 2.5rem;
+    }
+}
+
+.subtitle-font-size {
+    font-size: 1.25rem;
+}
+
+@media screen and (min-width: 768px) {
+    .subtitle-font-size {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .subtitle-font-size {
+        font-size: 1.75rem;
+    }
+}
+
+.small-font-size {
+    font-size: 0.75rem;
+}
+
+@media screen and (min-width: 768px) {
+    .small-font-size {
+        font-size: 0.875rem;
+    }
+}
+
+/* Standart Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Nunito", sans-serif;
+    background-color: var(--light-base);
+    color: var(--dark-base);
+}
+
+a {
+    text-decoration: none;
+    color: var(--dark-base);
+}
+
+ul {
+    list-style: none;
+}
