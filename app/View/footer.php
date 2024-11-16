@@ -2,7 +2,7 @@
 <div class="footer-container">
     <footer class="footer">
         <a href="#">
-            <img src="./images/logo.png" alt="ResepoItaliano Logo"/>
+            <img src="/images/logo.png" alt="ResepoItaliano Logo"/>
             <span>ResepoItaliano</span>
         </a>
         <div class="social-medias">
@@ -21,5 +21,6 @@
     </footer>
 </div>
 <!-- Footer End -->
+<script src="/script/main.js"></script>
 </body>
 </html>

@@ -2,8 +2,7 @@
 
 namespace Service;
 
-use Exception\ValidationException;
-use Repository\SessionRepotisory;
+use Repository\SessionRepository;
 use Repository\UserRepository;
 use Domain\Session;
 use Domain\User;
@@ -11,10 +10,10 @@ use Domain\User;
 class SessionService
 {
     public static string $SESSION_NAME = "X-RESEPOITALIANO-SESSION-X";
-    private SessionRepotisory $sessionRepository;
+    private SessionRepository $sessionRepository;
     private UserRepository $userRepository;
 
-    public function __construct(SessionRepotisory $sessionRepository, UserRepository $userRepository)
+    public function __construct(SessionRepository $sessionRepository, UserRepository $userRepository)
     {
         $this->sessionRepository = $sessionRepository;
         $this->userRepository = $userRepository;
@@ -40,7 +39,7 @@ class SessionService
         $sessionId = $_SESSION[self::$SESSION_NAME];
         $this->sessionRepository->deleteById($sessionId);
 
-        $_SESSION[self::$SESSION_NAME] = null;
+        $_SESSION[self::$SESSION_NAME] = "";
     }
 
     public function current(): ?User

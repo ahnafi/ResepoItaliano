@@ -8,8 +8,11 @@ use Model\UserLoginRequest;
 use Model\UserPasswordRequest;
 use Model\UserRegisterRequest;
 use Model\UserUpdateRequest;
-use Repository\SessionRepotisory;
+use Repository\RecipeRepository;
+use Repository\SavedRecipeRepository;
+use Repository\SessionRepository;
 use Repository\UserRepository;
+use Service\SavedRecipeService;
 use Service\SessionService;
 use Service\UserService;
 use App\View;
@@ -20,6 +23,7 @@ class UserController
 
     private UserService $userService;
     private SessionService $sessionService;
+    private SavedRecipeService $savedRecipeService;
 
     public function __construct()
     {
@@ -28,8 +32,12 @@ class UserController
         $userRepository = new UserRepository($connection);
         $this->userService = new UserService($userRepository);
 
-        $sessionRepository = new SessionRepotisory($connection);
+        $sessionRepository = new SessionRepository($connection);
         $this->sessionService = new SessionService($sessionRepository, $userRepository);
+
+        $recipeRepository = new RecipeRepository($connection);
+        $savedRecipeRepository = new SavedRecipeRepository($connection);
+        $this->savedRecipeService = new SavedRecipeService($savedRecipeRepository, $userRepository, $recipeRepository);
     }
 
     public function register(): void
@@ -48,9 +56,10 @@ class UserController
             $request->password = $_POST["password"];
 
             $result = $this->userService->register($request);
-            //langsung login
-            $this->sessionService->create($result->user->id);
-            View::redirect("/");
+//            //langsung login
+//            $this->sessionService->create($result->user->id);
+            Flasher::setFlash("Registration successfull");
+            View::redirect("/login");
         } catch (ValidationException $e) {
             Flasher::setFlash("register failed : " . $e->getMessage());
             View::redirect("/register");
@@ -94,7 +103,7 @@ class UserController
             ],
         ];
 
-        View::render("update", $model);
+        View::render("User/update", $model);
     }
 
     public function postUpdate(): void
@@ -105,6 +114,7 @@ class UserController
 
             $request = new UserUpdateRequest();
             $request->username = $_POST["username"];
+            $request->userId = $user->id;
             if (isset($_FILES['profile']) && $_FILES['profile']['error'] == UPLOAD_ERR_OK) {
                 $request->photo = $_FILES['profile'];
             } else {
@@ -145,6 +155,20 @@ class UserController
     {
         $this->sessionService->destroy();
         View::redirect("/");
+    }
+
+    public function profile(): void
+    {
+        $user = $this->sessionService->current();
+        $saved = $this->savedRecipeService->getSavedRecipes($user->id);
+
+        $model = [
+            "title" => "Profile",
+            "user" => $user,
+            "savedRecipes" => $saved
+        ];
+
+        View::render("User/profile", $model);
     }
 
 }

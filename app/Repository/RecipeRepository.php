@@ -42,9 +42,9 @@ class RecipeRepository
 
     public function find(int $recipeId): ?Recipe
     {
-        $statement = $this->connection->prepare("SELECT recipes.*, categories.name AS category_name
+        $statement = $this->connection->prepare("SELECT recipes.*, categories.category_name AS category_name
        FROM recipes
-        INNER JOIN categories ON recipes.category_id = categories.category_id WHERE id=?");
+        INNER JOIN categories ON recipes.category_id = categories.category_id WHERE recipe_id=?");
         $statement->execute([$recipeId]);
 
         try {
@@ -75,24 +75,26 @@ class RecipeRepository
 
         // Query untuk menghitung total data sesuai filter (tanpa LIMIT dan OFFSET)
         $countQuery = "
-        SELECT COUNT(*) AS total
-        FROM recipes
-        INNER JOIN categories ON recipes.category_id = categories.category_id
-        WHERE 1=1
-    ";
+    SELECT COUNT(*) AS total
+    FROM recipes
+    INNER JOIN categories ON recipes.category_id = categories.category_id
+    WHERE 1=1
+";
 
         $queryParams = [];
-        if ($params->title !== null) {
+
+        // Hanya menambahkan filter jika nilai tidak null
+        if ($params->title != null) {
             $countQuery .= " AND recipes.name LIKE ?";
             $queryParams[] = "%{$params->title}%";
         }
 
-        if ($params->category !== null) {
+        if ($params->category != null) {
             $countQuery .= " AND recipes.category_id = ?";
             $queryParams[] = $params->category;
         }
 
-        if ($params->userId !== null) {
+        if ($params->userId != null) {
             $countQuery .= " AND recipes.user_id = ?";
             $queryParams[] = $params->userId;
         }
@@ -108,30 +110,30 @@ class RecipeRepository
         $total = $countStatement->fetchColumn();
 
         // Query untuk mengambil data dengan LIMIT dan OFFSET
-        $query = "
-    SELECT 
-        recipes.*, 
-        categories.name AS category_name,
-        users.username AS user_username,
-        users.profile_image AS user_profile_image
-    FROM recipes
-    INNER JOIN categories ON recipes.category_id = categories.category_id
-    INNER JOIN users ON recipes.user_id = users.user_id
-    WHERE 1=1
-    ";
+        $query = " SELECT 
+                        recipes.*, 
+                        categories.category_name AS category_name,
+                        users.username AS user_username,
+                        users.profile_image AS user_profile_image
+                    FROM recipes
+                    INNER JOIN categories ON recipes.category_id = categories.category_id
+                    INNER JOIN users ON recipes.user_id = users.user_id
+                    WHERE 1=1";
 
-        if ($params->title !== null) {
+        // Hanya menambahkan filter jika nilai tidak null
+        if ($params->title != null) {
             $query .= " AND recipes.name LIKE ?";
         }
 
-        if ($params->category !== null) {
+        if ($params->category != null) {
             $query .= " AND recipes.category_id = ?";
         }
 
-        if ($params->userId !== null) {
+        if ($params->userId != null) {
             $query .= " AND recipes.user_id = ?";
         }
 
+        // Menambahkan LIMIT dan OFFSET
         $query .= " LIMIT ? OFFSET ?";
         $statement = $this->connection->prepare($query);
 

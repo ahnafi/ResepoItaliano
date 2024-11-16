@@ -12,6 +12,7 @@ use Model\ReadDetailRecipeResponse;
 use Model\RecipeSearchParams;
 use Model\RecipeSearchResponse;
 use Model\SearchRecipeResponse;
+use Model\UpdateRecipeRequest;
 use Repository\CategoryRepository;
 use Repository\RecipeImageRepository;
 use Repository\RecipeRepository;
@@ -138,7 +139,7 @@ class RecipeService
         }
     }
 
-    public function updateRecipe($request): void
+    public function updateRecipe(UpdateRecipeRequest $request): void
     {
         $this->ValidateUpdateRecipeRequest($request);
 
@@ -147,12 +148,12 @@ class RecipeService
 
             $user = $this->userRepository->findByField("user_id", $request->userId);
 
-            if ($user === null) {
+            if ($user == null) {
                 throw new ValidationException("user not found");
             }
 
             $recipe = $this->recipeRepository->find($request->recipeId);
-            if ($recipe === null) {
+            if ($recipe == null) {
                 throw new ValidationException("recipe not found");
             }
 
@@ -174,9 +175,9 @@ class RecipeService
         }
     }
 
-    private function ValidateUpdateRecipeRequest($request): void
+    private function ValidateUpdateRecipeRequest(UpdateRecipeRequest $request): void
     {
-        if ($request->name == null or $request->name == "" || $request->ingredients == null or $request->ingredients == "" || $request->steps == null or $request->steps == "" || $request->note == null or $request->note == "" || $request->categoryId == null or $request->categoryId == "") {
+        if ($request->recipeId == "" or $request->recipeId == null || $request->name == null or $request->name == "" || $request->ingredients == null or $request->ingredients == "" || $request->steps == null or $request->steps == "" || $request->note == null or $request->note == "" || $request->categoryId == null or $request->categoryId == "") {
             throw new ValidationException ("title , ingredients ,steps ,category cannot be empty");
         }
     }
@@ -242,9 +243,9 @@ class RecipeService
 
     private function validateSearchRecipeRequest(RecipeSearchParams $request): void
     {
-        if ($request->title == null && $request->category == null) {
-            throw new ValidationException("title , category cannot be empty");
-        }
+//        if ($request->title == null && $request->category == null) {
+//            throw new ValidationException("title , category cannot be empty");
+//        }
     }
 
     public function UserRecipes(RecipeSearchParams $request): RecipeSearchResponse

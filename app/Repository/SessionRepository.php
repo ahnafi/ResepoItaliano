@@ -5,7 +5,7 @@ namespace Repository;
 use Domain\Session;
 use Exception\ValidationException;
 
-class SessionRepotisory
+class SessionRepository
 {
     private ?\PDO $connection = null;
 

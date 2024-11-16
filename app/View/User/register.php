@@ -15,11 +15,11 @@ include_once __DIR__ . "/../Components/navbar.php";
             <h1 class="title-font-size">Daftar</h1>
             <p>Buat akun barumu dan mulai jelajahi masakan khas Italia</p>
         </div>
-        <form action="#" method="POST" class="register-form-body">
+        <form action="/register" method="POST" class="register-form-body">
             <input
                     type="text"
                     id="name"
-                    name="name"
+                    name="username"
                     placeholder="Masukkan username..."
                     class="normal-font-size"
             />
@@ -49,3 +49,33 @@ include_once __DIR__ . "/../Components/navbar.php";
     </div>
 </div>
 <!-- Register End -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('.register-form-body');
+
+        form.addEventListener('submit', function (event) {
+            // Mengambil nilai dari input
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Regex untuk memvalidasi format email
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Validasi email
+            if (!emailPattern.test(email)) {
+                alert('Format email tidak valid!');
+                event.preventDefault(); // Mencegah form dari pengiriman
+                return;
+            }
+
+            // Validasi password
+            if (password !== confirmPassword) {
+                alert('Password dan konfirmasi password harus sama!');
+                event.preventDefault(); // Mencegah form dari pengiriman
+                return;
+            }
+
+        });
+    });
+</script>

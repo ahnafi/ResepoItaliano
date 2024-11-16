@@ -1,5 +1,4 @@
 <?php
-
 $categories = [
     [
         "name" => "Pizza",
@@ -63,12 +62,12 @@ include_once __DIR__ . "/../Components/navbar.php";
         <h2 class="title-font-size">Kategori</h2>
         <div class="categories-list">
             <div class="category-item">
-                <img src="./images/icons/italy.png" alt="Pasta"/>
+                <img src="/images/icons/italy.png" alt="Pasta"/>
                 <h3 class="subtitle-font-size">Semua</h3>
             </div>
             <?php foreach ($categories as $category): ?>
                 <div class="category-item">
-                    <img src="./images/icons/<?= $category["icon"] ?>" alt="icon <?= $category["name"] ?>"/>
+                    <img src="/images/icons/<?= $category["icon"] ?>" alt="icon <?= $category["name"] ?>"/>
                     <h3 class="subtitle-font-size"><?= $category["name"] ?></h3>
                 </div>
             <?php endforeach; ?>
@@ -83,11 +82,11 @@ include_once __DIR__ . "/../Components/navbar.php";
         <div class="recipes-list">
             <div class="recipe-item">
                 <a href="#">
-                    <img src="./images/recipes/spaghetti-carbonara.jpeg"
+                    <img src="/images/recipes/spaghetti-carbonara.jpeg"
                          alt="Spaghetti Carbonara"/>
                 </a>
                 <div class="user-recipe">
-                    <img src="./images/profiles/zaki-dzulfikar.png" alt="Zaki Dzulfikar Foto Profil"/>
+                    <img src="/images/profiles/zaki-dzulfikar.png" alt="Zaki Dzulfikar Foto Profil"/>
                     <p>Zaki Dzulfikar</p>
                 </div>
                 <div class="recipe-item-content">
@@ -107,11 +106,11 @@ include_once __DIR__ . "/../Components/navbar.php";
             </div>
             <div class="recipe-item">
                 <a href="#">
-                    <img src="./images/recipes/margherita-pizza.jpg"
+                    <img src="/images/recipes/margherita-pizza.jpg"
                          alt="Margherita Pizza"/>
                 </a>
                 <div class="user-recipe">
-                    <img src="./images/profiles/nadia-putri.png" alt="Nadia Putri Foto Profil"/>
+                    <img src="/images/profiles/nadia-putri.png" alt="Nadia Putri Foto Profil"/>
                     <p>Nadia Putri</p>
                 </div>
                 <div class="recipe-item-content">
@@ -132,10 +131,10 @@ include_once __DIR__ . "/../Components/navbar.php";
             </div>
             <div class="recipe-item">
                 <a href="#">
-                    <img src="./images/recipes/tiramisu.jpg" alt="Tiramisu"/>
+                    <img src="/images/recipes/tiramisu.jpg" alt="Tiramisu"/>
                 </a>
                 <div class="user-recipe">
-                    <img src="./images/profiles/rizky-pratama.png" alt="Rizky Pratama Foto Profil"/>
+                    <img src="/images/profiles/rizky-pratama.png" alt="Rizky Pratama Foto Profil"/>
                     <p>Rizky Pratama</p>
                 </div>
                 <div class="recipe-item-content">
