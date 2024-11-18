@@ -38,6 +38,9 @@ class SavedRecipeService
 
             $recipe = $this->recipeRepository->find($request->recipeId);
 
+            // validasi apakah sudah ada saved recipes yang sudah disimpan
+
+
             $saved = new SavedRecipes();
             $saved->recipeId = $recipe->recipeId;
             $saved->userId = $user->id;

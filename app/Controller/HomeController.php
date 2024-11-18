@@ -5,6 +5,7 @@ namespace Controller;
 use App\Flasher;
 use App\View;
 use Config\Database;
+use Domain\Recipe;
 use Exception\ValidationException;
 use Model\AddSavedRecipesRequest;
 use Model\CreateRecipeRequest;
@@ -56,6 +57,13 @@ class HomeController
         if ($user != null) {
             $model["user"] = $user;
         }
+
+        $result = $this->recipeService->searchRecipe(new RecipeSearchParams());
+
+        $model["data"] = [
+            "recipes" => $result->recipes,
+            "total" => $result->totalRecipes
+        ];
 
         View::render("Home/index", $model);
     }
@@ -149,8 +157,22 @@ class HomeController
             $res = $this->recipeService->detailRecipe($recipeId);
 
             $model["recipe"] = [
-                "recipeData" => $res->recipe,
-                "recipeImages" => $res->images
+                "recipe_id" => $recipeId,
+                "title" => $res->recipe->name,
+                "ingredients" => $res->recipe->ingredients,
+                "steps" => $res->recipe->steps,
+                "banner" => $res->recipe->image,
+                "note" => $res->recipe->note,
+                "created_at" => $res->recipe->createdAt,
+                "recipe_images" => $res->images,
+
+                "creator_id" => $res->recipe->user->id,
+                "creator_name" => $res->recipe->user->username,
+                "creator_email" => $res->recipe->user->email,
+                "creator_image" => $res->recipe->user->profileImage,
+
+                "category_id" => $res->recipe->category->category_id,
+                "category_name" => $res->recipe->category->category_name,
             ];
 
             View::render("Recipe/detail", $model);

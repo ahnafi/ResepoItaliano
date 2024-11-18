@@ -6,6 +6,6 @@ use Domain\Recipe;
 
 class ReadDetailRecipeResponse
 {
-    public ?Recipe $recipe = null;
+    public ?GetRecipe $recipe = null;
     public ?array $images = null;
 }

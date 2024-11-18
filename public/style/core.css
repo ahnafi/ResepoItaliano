@@ -4,12 +4,13 @@
     --dark-base: #0f172a;
     --green-base: #15803d;
     --amber-base: #f59e0b;
+    --red-base: #dc2626;
+    --blue-base: #2563EB;
 }
 
 .normal-font-size {
     font-size: 0.875rem;
 }
-
 @media screen and (min-width: 768px) {
     .normal-font-size {
         font-size: 1rem;
@@ -19,13 +20,11 @@
 .big-normal-font-size {
     font-size: 1rem;
 }
-
 @media screen and (min-width: 768px) {
     .big-normal-font-size {
         font-size: 1.25rem;
     }
 }
-
 @media screen and (min-width: 1024px) {
     .big-normal-font-size {
         font-size: 1.5rem;
@@ -35,13 +34,11 @@
 .title-font-size {
     font-size: 1.5rem;
 }
-
 @media screen and (min-width: 768px) {
     .title-font-size {
         font-size: 2rem;
     }
 }
-
 @media screen and (min-width: 1024px) {
     .title-font-size {
         font-size: 2.5rem;
@@ -51,13 +48,11 @@
 .subtitle-font-size {
     font-size: 1.25rem;
 }
-
 @media screen and (min-width: 768px) {
     .subtitle-font-size {
         font-size: 1.5rem;
     }
 }
-
 @media screen and (min-width: 1024px) {
     .subtitle-font-size {
         font-size: 1.75rem;
@@ -67,7 +62,6 @@
 .small-font-size {
     font-size: 0.75rem;
 }
-
 @media screen and (min-width: 768px) {
     .small-font-size {
         font-size: 0.875rem;
@@ -79,10 +73,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Nunito", sans-serif;
 }
 
 body {
-    font-family: "Nunito", sans-serif;
     background-color: var(--light-base);
     color: var(--dark-base);
 }
@@ -95,3 +89,106 @@ a {
 ul {
     list-style: none;
 }
+
+/* Aside Profile Start */
+/* Tombol Toggle */
+.aside-toggle {
+    display: block;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    padding: 12px;
+    background-color: var(--blue-base); /* Blue base */
+    font-weight: bold;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: transform 0.3s;
+    color: var(--light-base);
+}
+
+.icon {
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+}
+
+@media screen and (min-width: 768px) {
+    .aside-toggle {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .aside-toggle {
+        top: 96px;
+    }
+}
+
+/* Aside Menu */
+.aside-menu {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    height: 100%;
+    width: 16rem; /* 64 in Tailwind */
+    background-color: var(--light-base);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    padding-right: 2rem;
+    border-right: 1px solid var(--dark-base); /* Indigo-100 */
+    z-index: 50;
+}
+
+@media screen and (min-width: 768px) {
+    .aside-menu {
+        transform: translateX(0);
+        display: block;
+        position: sticky;
+        padding-top: 0;
+        width: 33%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .aside-menu {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .aside-menu {
+        top: 96px;
+    }
+}
+
+.menu-content {
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+h2 {
+    margin-bottom: 1rem;
+    font-weight: 700;
+    padding-left: 0.75rem;
+}
+
+.aside-link {
+    display: flex;
+    align-items: center;
+    padding: 0.625rem 0.75rem;
+    font-weight: 700;
+}
+
+.exit {
+    background-color: var(--red-base); /* Red-600 */
+    color: var(--light-base);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    text-align: center;
+}
+/* Aside Profile End */

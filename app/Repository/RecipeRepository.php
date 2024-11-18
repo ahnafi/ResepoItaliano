@@ -2,8 +2,11 @@
 
 namespace Repository;
 
+use Domain\Category;
 use Domain\Recipe;
+use Domain\User;
 use Exception\ValidationException;
+use Model\GetRecipe;
 use Model\RecipeSearchParams;
 use Model\RecipeSearchResponse;
 
@@ -40,25 +43,32 @@ class RecipeRepository
         $statement->execute([$recipeId]);
     }
 
-    public function find(int $recipeId): ?Recipe
+    public function find(int $recipeId): ?GetRecipe
     {
-        $statement = $this->connection->prepare("SELECT recipes.*, categories.category_name AS category_name
-       FROM recipes
-        INNER JOIN categories ON recipes.category_id = categories.category_id WHERE recipe_id=?");
+        $statement = $this->connection->prepare("SELECT recipes.*, categories.category_name AS category_name, users.*
+            FROM recipes
+            INNER JOIN categories ON recipes.category_id = categories.category_id
+            INNER JOIN users ON recipes.user_id = users.user_id
+            WHERE recipes.recipe_id = ?");
         $statement->execute([$recipeId]);
 
         try {
             if ($row = $statement->fetch()) {
-                $recipe = new Recipe();
+                $recipe = new GetRecipe();
                 $recipe->recipeId = $row['recipe_id'];
                 $recipe->name = $row['name'];
                 $recipe->ingredients = $row['ingredients'];
                 $recipe->steps = $row['steps'];
                 $recipe->note = $row['note'];
-                $recipe->userId = $row['user_id'];
                 $recipe->createdAt = $row['created_at'];
-                $recipe->categoryId = $row['category_id'];
-                $recipe->categoryName = $row['category_name'];
+                $recipe->user = new User();
+                $recipe->user->id = $row['user_id'];
+                $recipe->user->email = $row['email'];
+                $recipe->user->username = $row['username'];
+                $recipe->user->profileImage = $row['profile_image'];
+                $recipe->category = new Category();
+                $recipe->category->category_id = $row['category_id'];
+                $recipe->category->category_name = $row['category_name'];
                 return $recipe;
             } else {
                 return null;
@@ -66,6 +76,10 @@ class RecipeRepository
         } finally {
             $statement->closeCursor();
         }
+    }
+
+    public function savedUser(): void
+    {
     }
 
     public function search(RecipeSearchParams $params): RecipeSearchResponse
@@ -113,8 +127,7 @@ class RecipeRepository
         $query = " SELECT 
                         recipes.*, 
                         categories.category_name AS category_name,
-                        users.username AS user_username,
-                        users.profile_image AS user_profile_image
+                        users.*
                     FROM recipes
                     INNER JOIN categories ON recipes.category_id = categories.category_id
                     INNER JOIN users ON recipes.user_id = users.user_id
@@ -151,24 +164,23 @@ class RecipeRepository
 
         // Ambil hasil dan masukkan ke dalam objek Recipe
         while ($row = $statement->fetch()) {
-            $recipe = new Recipe();
+            $recipe = new GetRecipe();
             $recipe->recipeId = $row['recipe_id'];
             $recipe->name = $row['name'];
             $recipe->ingredients = $row['ingredients'];
             $recipe->steps = $row['steps'];
             $recipe->note = $row['note'];
-            $recipe->userId = $row['user_id'];
-            $recipe->categoryId = $row['category_id'];
+            $recipe->image = $row['image'];
             $recipe->createdAt = $row['created_at'];
-            $recipe->categoryName = $row['category_name'];
+            $recipe->user = new User();
+            $recipe->user->id = $row['user_id'];
+            $recipe->user->username = $row['username'];
+            $recipe->user->profileImage = $row['profile_image'];
+            $recipe->category = new Category();
+            $recipe->category->category_id = $row['category_id'];
+            $recipe->category->category_name = $row['category_name'];
 
-            $recipes[] = [
-                "recipe" => $recipe,
-                "user" => [
-                    "username" => $row['user_username'],
-                    "profile_image" => $row['user_profile_image'],
-                ]
-            ];
+            $recipes[] = (array)$recipe;
         }
 
         // Return data resep dan total count

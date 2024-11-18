@@ -23,7 +23,7 @@
                     <a href="/register" class="register-button">Daftar</a>
                 </li>
                 <li class="navigation-link">
-                    <a href="/profile" class="profile-photo">
+                    <a href="/user/profile" class="profile-photo">
                         <img src="./images/profiles/default.jpg"
                              alt="Profile photo"
                              class="profile-photo"/>

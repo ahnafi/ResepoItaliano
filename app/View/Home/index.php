@@ -29,7 +29,9 @@ $categories = [
         "icon" => "bruschetta.png"
     ]
 ];
-
+$data = $model['data'] ?? [];
+$recipes = $data['recipes'];
+$total = $data['total'];
 ?>
 
 <!-- navbar -->
@@ -80,74 +82,40 @@ include_once __DIR__ . "/../Components/navbar.php";
     <div class="recipes">
         <h2 class="title-font-size">Resep Terbaru</h2>
         <div class="recipes-list">
-            <div class="recipe-item">
-                <a href="#">
-                    <img src="/images/recipes/spaghetti-carbonara.jpeg"
-                         alt="Spaghetti Carbonara"/>
-                </a>
-                <div class="user-recipe">
-                    <img src="/images/profiles/zaki-dzulfikar.png" alt="Zaki Dzulfikar Foto Profil"/>
-                    <p>Zaki Dzulfikar</p>
-                </div>
-                <div class="recipe-item-content">
-                    <a href="#">
-                        <h3 class="subtitle-font-size">Spaghetti Carbonara</h3>
+            <?php foreach ($recipes as $recipe): ?>
+                <div class="recipe-item">
+                    <a href="/recipe/<?= $recipe['recipeId'] ?>">
+                        <img src="/images/recipes/<?= $recipe['image'] ?>" alt="image of <?= $recipe['name'] ?>"/>
                     </a>
-                    <p>
-                        Spaghetti | Daging Asap | Telur | Keju Parmesan | Garam | Lada
-                    </p>
+                    <div class="user-recipe">
+                        <img src="/images/profiles/<?= $recipe['user']->profile_image ?? 'default.jpg' ?>"
+                             alt="<?= $recipe['user']->username ?> Foto Profil"/>
+                        <p><?= $recipe['user']->username ?></p>
+                    </div>
+                    <div class="recipe-item-content">
+                        <a href="/recipe/<?= $recipe['recipeId'] ?>">
+                            <h3 class="subtitle-font-size">
+                                <?= $recipe['name'] ?>
+                            </h3>
+                        </a>
+                        <p>
+                            <?php
+                            $ingredients = [];
+                            foreach (explode("###", $recipe['ingredients']) as $ingredient) {
+                                $ingredients[] = trim($ingredient);
+                            }
+                            echo truncateText(implode(" | ", $ingredients), 50);
+                            ?>
+                        </p>
+                    </div>
+                    <div class="recipe-time-past small-font-size">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
+                        </svg>
+                        <span><?= timeAgo($recipe['createdAt']) ?></span>
+                    </div>
                 </div>
-                <div class="recipe-time-past small-font-size">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                        <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
-                    </svg>
-                    <span>3 hari yang lalu</span>
-                </div>
-            </div>
-            <div class="recipe-item">
-                <a href="#">
-                    <img src="/images/recipes/margherita-pizza.jpg"
-                         alt="Margherita Pizza"/>
-                </a>
-                <div class="user-recipe">
-                    <img src="/images/profiles/nadia-putri.png" alt="Nadia Putri Foto Profil"/>
-                    <p>Nadia Putri</p>
-                </div>
-                <div class="recipe-item-content">
-                    <a href="#">
-                        <h3 class="subtitle-font-size">Margherita Pizza</h3>
-                    </a>
-                    <p>
-                        Adonan Pizza | Saus Tomat | Mozzarella | Daun Basil | Garam |
-                        Minyak Zaitun
-                    </p>
-                </div>
-                <div class="recipe-time-past small-font-size">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                        <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
-                    </svg>
-                    <span>3 hari yang lalu</span>
-                </div>
-            </div>
-            <div class="recipe-item">
-                <a href="#">
-                    <img src="/images/recipes/tiramisu.jpg" alt="Tiramisu"/>
-                </a>
-                <div class="user-recipe">
-                    <img src="/images/profiles/rizky-pratama.png" alt="Rizky Pratama Foto Profil"/>
-                    <p>Rizky Pratama</p>
-                </div>
-                <div class="recipe-item-content">
-                    <a href="#"><h3 class="subtitle-font-size">Tiramisu</h3></a>
-                    <p>Mascarpone | Gula | Telur | Kopi | Cokelat Bubuk</p>
-                </div>
-                <div class="recipe-time-past small-font-size">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                        <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
-                    </svg>
-                    <span>3 hari yang lalu</span>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

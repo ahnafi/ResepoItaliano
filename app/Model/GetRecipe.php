@@ -1,8 +1,11 @@
 <?php
 
-namespace Domain;
+namespace Model;
 
-class Recipe
+use Domain\Category;
+use Domain\User;
+
+class GetRecipe
 {
     public ?int $recipeId = null;
     public string $name;
@@ -11,6 +14,6 @@ class Recipe
     public ?string $note = null;
     public ?string $image = null;
     public ?string $createdAt = null;
-    public ?int $userId = null;
-    public ?int $categoryId = null;
+    public ?User $user = null;
+    public ?Category $category = null;
 }
