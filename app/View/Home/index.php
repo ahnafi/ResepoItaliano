@@ -53,7 +53,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                 kami memiliki semua yang Anda butuhkan untuk menciptakan hidangan
                 yang lezat dan memukau.
             </p>
-            <a href="#" class="normal-font-size">Jelajahi Sekarang</a>
+            <a href="#recipe" class="normal-font-size">Jelajahi Sekarang</a>
         </div>
     </div>
 </div>
@@ -80,7 +80,7 @@ include_once __DIR__ . "/../Components/navbar.php";
 <!-- Recipe Section Start -->
 <div class="recipes-container">
     <div class="recipes">
-        <h2 class="title-font-size">Resep Terbaru</h2>
+        <h2 id="recipe" class="title-font-size"><?= count($recipes) > 0 ? "Resep Terbaru" : "Tidak ada Resep" ?></h2>
         <div class="recipes-list">
             <?php foreach ($recipes as $recipe): ?>
                 <div class="recipe-item">
@@ -88,7 +88,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                         <img src="/images/recipes/<?= $recipe['image'] ?>" alt="image of <?= $recipe['name'] ?>"/>
                     </a>
                     <div class="user-recipe">
-                        <img src="/images/profiles/<?= $recipe['user']->profile_image ?? 'default.jpg' ?>"
+                        <img src="/images/profiles/<?= $recipe['user']->profileImage ?? 'default.jpg' ?>"
                              alt="<?= $recipe['user']->username ?> Foto Profil"/>
                         <p><?= $recipe['user']->username ?></p>
                     </div>

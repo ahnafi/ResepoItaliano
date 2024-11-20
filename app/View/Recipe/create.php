@@ -1,3 +1,15 @@
+<?php
+$foodItems = [
+    'Pizza',
+    'Pasta',
+    'Risotto',
+    'Gelato',
+    'Tiramisu',
+    'Burrata',
+    'Bruschetta'
+];
+?>
+
 <!-- navbar -->
 <?php
 include_once __DIR__ . "/../Components/navbar.php";
@@ -12,81 +24,64 @@ include_once __DIR__ . "/../Components/navbar.php";
                 <h1 class="title-font-size">Tambah Resep</h1>
             </div>
             <div class="add-recipe-form">
-                <form id="recipeForm">
+                <form id="recipeForm" method="post" action="/recipe/add" enctype="multipart/form-data">
                     <div class="form-group">
                         <label class="normal-font-size" for="name">Judul Resep:</label>
-                        <input
-                                type="text"
-                                id="name"
-                                required
-                                class="normal-font-size"
-                        />
+                        <input type="text" id="name" required class="normal-font-size" name="title"/>
                     </div>
                     <div class="form-group">
                         <label class="normal-font-size" for="category">Kategori:</label>
-                        <select id="category" required class="normal-font-size">
-                            <option value="Pizza">Pizza</option>
-                            <option value="Pasta">Pasta</option>
-                            <option value="Risotto">Risotto</option>
-                            <option value="Gelato">Gelato</option>
-                            <option value="Tiramisu">Tiramisu</option>
-                            <option value="Burrata">Burrata</option>
-                            <option value="Bruschetta">Bruschetta</option>
+                        <select id="category" required class="normal-font-size" name="categoryId">
+                            <?php foreach ($foodItems as $key => $category): ?>
+                                <option value="<?= $key + 1 ?>"><?= $category ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="normal-font-size" for="ingredients"
-                        >Bahan-bahan:</label
-                        >
+                        <label class="normal-font-size" for="ingredients">
+                            Bahan-bahan:
+                        </label>
                         <div id="ingredientsList">
                             <div class="ingredient-item">
                                 <span class="ingredient-number">1.</span>
-                                <input class="normal-font-size" type="text" required/>
+                                <input class="normal-font-size" type="text" id="ingredients" required/>
                             </div>
                         </div>
-                        <button
-                                class="normal-font-size"
-                                type="button"
-                                onclick="addIngredient()"
-                        >
+                        <button class="normal-font-size" type="button" onclick="addIngredient()">
                             Tambah Bahan
                         </button>
                     </div>
                     <div class="form-group">
-                        <label class="normal-font-size" for="steps"
-                        >Langkah-langkah:</label
-                        >
+                        <label class="normal-font-size" for="steps">
+                            Langkah-langkah:
+                        </label>
                         <div id="stepsList">
                             <div class="step-item">
                                 <span class="step-number">1.</span>
-                                <input type="text" class="step normal-font-size" required/>
+                                <input type="text" class="step normal-font-size" id="steps" required/>
                             </div>
                         </div>
-                        <button
-                                class="normal-font-size"
-                                type="button"
-                                onclick="addStep()"
-                        >
+                        <button class="normal-font-size" type="button" onclick="addStep()">
                             Tambah Langkah
                         </button>
                     </div>
                     <div class="form-group">
                         <label class="normal-font-size" for="note">Catatan:</label>
-                        <textarea id="note" rows="6"></textarea>
+                        <textarea id="note" rows="6" name="note"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="normal-font-size" for="image"
-                        >Unggah Gambar:</label
-                        >
+                        <label class="normal-font-size" for="image">
+                            Unggah Gambar:
+                        </label>
                         <div class="custom-file-upload">
-                            <input type="file" id="image" accept="image/*" multiple/>
+                            <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png" required>
                             <span>Pilih Gambar</span>
                         </div>
-                        <div
-                                id="image-preview-container"
-                                class="image-preview-container"
-                        ></div>
+                        <div id="image-preview-container" class="image-preview-container">
+                        </div>
                     </div>
+                    <input type="hidden" name="ingredients" id="valIngredients" >
+                    <input type="hidden" name="steps" id="valSteps" >
                 </form>
             </div>
         </div>

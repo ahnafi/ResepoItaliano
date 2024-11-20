@@ -14,7 +14,7 @@ use Model\RecipeSearchParams;
 use Model\RemoveSavedRecipe;
 use Model\UpdateRecipeRequest;
 use Repository\CategoryRepository;
-use Repository\RecipeImageRepository;
+//use Repository\RecipeImageRepository;
 use Repository\RecipeRepository;
 use Repository\SavedRecipeRepository;
 use Repository\SessionRepository;
@@ -38,9 +38,9 @@ class HomeController
         $this->sessionService = new SessionService($sessionRepository, $userRepository);
 
         $recipeRepository = new RecipeRepository($connection);
-        $recipeImageRepository = new RecipeImageRepository($connection);
+//        $recipeImageRepository = new RecipeImageRepository($connection);
         $categoryRepository = new CategoryRepository($connection);
-        $this->recipeService = new RecipeService($recipeRepository, $categoryRepository, $recipeImageRepository, $userRepository);
+        $this->recipeService = new RecipeService($recipeRepository, $categoryRepository, $userRepository);
 
         $savedRecipeRepository = new SavedRecipeRepository($connection);
         $this->savedRecipeService = new SavedRecipeService($savedRecipeRepository, $userRepository, $recipeRepository);
@@ -55,7 +55,7 @@ class HomeController
         ];
 
         if ($user != null) {
-            $model["user"] = $user;
+            $model["user"] = (array)$user;
         }
 
         $result = $this->recipeService->searchRecipe(new RecipeSearchParams());
@@ -78,7 +78,7 @@ class HomeController
         ];
 
         if ($user != null) {
-            $model["user"] = $user;
+            $model["user"] = (array)$user;
         }
 
         View::render("Home/about", $model);
@@ -93,7 +93,7 @@ class HomeController
         ];
 
         if ($user != null) {
-            $model["user"] = $user;
+            $model["user"] = (array)$user;
         }
 
         View::render("error", $model);
@@ -105,7 +105,7 @@ class HomeController
 
         $model = [
             "title" => "Create Recipe",
-            "user" => $user,
+            "user" =>(array)$user,
         ];
 
         View::render("Recipe/create", $model);
@@ -116,20 +116,19 @@ class HomeController
         $user = $this->sessionService->current();
 
         try {
-
             $req = new CreateRecipeRequest();
             $req->userId = $user->id;
-            $req->name = htmlspecialchars($_POST['name']);
+            $req->name = htmlspecialchars($_POST['title']);
             $req->ingredients = htmlspecialchars($_POST['ingredients']);
             $req->steps = htmlspecialchars($_POST['steps']);
-            $req->categoryId = htmlspecialchars($_POST['categoryId']);
+            $req->categoryId = (int)htmlspecialchars($_POST['categoryId']);
             $req->note = htmlspecialchars($_POST['note'] ?? null);
-
-            if (isset($_FILES['photos'])) {
-                $req->recipeImages = $_FILES['photos'];
-            } else {
-                $req->recipeImages = [];
-            }
+            $req->image = $_FILES['image'] ?? null;
+//            if (isset($_FILES['photos'])) {
+//                $req->recipeImages = $_FILES['photos'];
+//            } else {
+//                $req->recipeImages = [];
+//            }
 
             $this->recipeService->uploadRecipe($req);
             Flasher::setFlash("Success create recipe");
@@ -144,18 +143,16 @@ class HomeController
     {
         $user = $this->sessionService->current();
 
-        $model = [
-            "title" => "Detail Recipe",
-        ];
+        $model = [];
 
         if ($user != null) {
-            $model["user"] = $user;
+            $model["user"] = (array)$user;
         }
 
         try {
 
             $res = $this->recipeService->detailRecipe($recipeId);
-
+            $model["title"] = $res->recipe->name;
             $model["recipe"] = [
                 "recipe_id" => $recipeId,
                 "title" => $res->recipe->name,
@@ -164,7 +161,7 @@ class HomeController
                 "banner" => $res->recipe->image,
                 "note" => $res->recipe->note,
                 "created_at" => $res->recipe->createdAt,
-                "recipe_images" => $res->images,
+//                "recipe_images" => $res->,
 
                 "creator_id" => $res->recipe->user->id,
                 "creator_name" => $res->recipe->user->username,
@@ -191,7 +188,7 @@ class HomeController
         ];
 
         if ($user != null) {
-            $model["user"] = $user;
+            $model["user"] = (array)$user;
         }
         try {
 
@@ -220,12 +217,12 @@ class HomeController
 
         $model = [
             "title" => "Update Recipe",
-            "user" => $user,
+            "user" => (array)$user,
         ];
 
         try {
             $recipe = $this->recipeService->detailRecipe($recipeId);
-            $model["recipe"] = $recipe->recipe;
+            $model["recipe"] = (array)$recipe->recipe;
 
             View::render("Recipe/update", $model);
         } catch (ValidationException $exception) {
@@ -234,25 +231,30 @@ class HomeController
         }
     }
 
-    public function postUpdateRecipe(): void
+    public function postUpdateRecipe($recipeId): void
     {
         $user = $this->sessionService->current();
 
         try {
+            var_dump($_POST);
+            var_dump($_FILES);
             $req = new UpdateRecipeRequest();
-            $req->recipeId = htmlspecialchars($_POST['recipeId']);
+            $req->recipeId = (int)$recipeId;
+            $req->name = htmlspecialchars($_POST['title']);
             $req->steps = htmlspecialchars($_POST['steps']);
-            $req->name = htmlspecialchars($_POST['name']);
-            $req->note = htmlspecialchars($_POST['note'] ?? null);
+            $req->note = htmlspecialchars($_POST['note']);
             $req->categoryId = (int)htmlspecialchars($_POST['categoryId']);
             $req->ingredients = htmlspecialchars($_POST['ingredients']);
             $req->userId = $user->id;
 
+            $req->image = $_FILES['image'] ?? null;
+
             $this->recipeService->updateRecipe($req);
-            View::redirect("/profile");
+            Flasher::setFlash("Update recipe successfully");
+            View::redirect("/recipe/update/" . $recipeId);
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
-            View::redirect("/profile");
+            View::redirect("/");
         }
     }
 
@@ -262,33 +264,32 @@ class HomeController
 
         try {
             $req = new DeleteRecipeRequest();
-            $req->recipeId = htmlspecialchars($_POST['recipeId']);
+            $req->recipeId = (int)htmlspecialchars($_POST['recipeId']);
             $req->userId = $user->id;
             $this->recipeService->deleteRecipe($req);
 
-            Flasher::setFlash("Success delete recipe");
-            View::redirect("/profile");
+            Flasher::setFlash("Remove recipe successfully");
+            View::redirect("/user/profile/manage-recipes");
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
-            View::redirect("/profile");
+            View::redirect("/user/profile/manage-recipes");
         }
     }
 
-    public function postSaveRecipe(): void
+    public function postSaveRecipe($recipeId): void
     {
         $user = $this->sessionService->current();
 
         try {
-
             $req = new AddSavedRecipesRequest();
 
             $req->userId = $user->id;
-            $req->recipeId = htmlspecialchars($_POST['recipeId']);
+            $req->recipeId = (int)$recipeId;
 
             $this->savedRecipeService->add($req);
 
             Flasher::setFlash("Success saving recipe");
-            View::redirect("/recipe/$req->recipeId");
+            View::redirect("/recipe/$recipeId");
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
             View::redirect("/");
@@ -302,13 +303,14 @@ class HomeController
         try {
             $req = new RemoveSavedRecipe();
             $req->userId = $user->id;
-            $req->savedId = htmlspecialchars($_POST['savedId']);
+            $req->savedId = (int)htmlspecialchars($_POST['savedId']);
+            var_dump($req);
             $this->savedRecipeService->remove($req);
             Flasher::setFlash("Success removing recipe");
-            View::redirect("/profile");
+            View::redirect("/user/profile/saved-recipe");
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
-            View::redirect("/profile");
+            View::redirect("/");
         }
     }
 

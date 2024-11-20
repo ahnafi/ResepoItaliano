@@ -20,23 +20,35 @@ include_once __DIR__ . "/../Components/navbar.php";
 
 <!-- Recipe Section Start -->
 <div class="search-container">
+    <div class="">
+        <form method="get" action="/search">
+            <label>
+                <select name="cat">
+                    <option selected value=""> Pilih Kategori</option>
+                    <?php foreach ($category as $key => $item): ?>
+                        <option value="<?= $key + 1 ?>"><?= $item ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+            <input name="title" type="search" placeholder="Search Recipe" aria-label="Search">
+            <button type="submit"> &nbsp; Search</button>
+        </form>
+    </div>
     <div class="search">
         <h2 class="title-font-size">
             <?php
             $text = "Mencari ";
 
             $title = isset($_GET["title"]) ? htmlspecialchars($_GET["title"]) : '';
-            $categoryKey = $_GET["category"] ?? null;
+            $categoryKey = $_GET["cat"] ?? null;
 
-            if ($title) {
+            if ($title == null and $categoryKey == "") $text = "Resep Italy";
+            else if ($title) {
                 $text .= $title;
+            } else {
+                $text .= $category[$categoryKey];
             }
 
-            if ($categoryKey !== null && isset($category[$categoryKey])) {
-                $text .= ", " . htmlspecialchars($category[$categoryKey]);
-            }
-
-            if ($title == null and $categoryKey == null) $text = "Resep Italy";
 
             echo $text;
             ?>

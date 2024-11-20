@@ -16,7 +16,7 @@ include_once __DIR__ . "/../Components/navbar.php";
         <div class="detail-content">
             <div class="detail-head">
                 <div class="detail-image">
-                    <img src="./images/recipes/<?= $recipe["banner"] ?>" alt="photo <?= $recipe["title"] ?>"/>
+                    <img src="/images/recipes/<?= $recipe["banner"] ?>" alt="photo <?= $recipe["title"] ?>"/>
                 </div>
                 <h2 class="title-font-size"><?= $recipe["title"] ?></h2>
                 <p class="category"><?= $recipe["category_name"] ?></p>
@@ -53,7 +53,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                 </div>
             </div>
             <div class="detail-action">
-                <form action="">
+                <form method="post" action="/recipe/save/<?= $recipe['recipe_id'] ?>">
                     <button type="submit" class="normal-font-size">
                         <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                             <path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z"/>

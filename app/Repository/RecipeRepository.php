@@ -21,8 +21,7 @@ class RecipeRepository
 
     public function save(Recipe $recipe): Recipe
     {
-
-        $statement = $this->connection->prepare("INSERT INTO recipes (name,ingredients,steps,note,image,user_id,category_id) VALUES (?,?,?,?,?,?)");
+        $statement = $this->connection->prepare("INSERT INTO recipes (name,ingredients,steps,note,image,user_id,category_id) VALUES (?,?,?,?,?,?,?)");
         $statement->execute([$recipe->name, $recipe->ingredients, $recipe->steps, $recipe->note, $recipe->image, $recipe->userId, $recipe->categoryId]);
         $recipe->recipeId = $this->connection->lastInsertId();
 
@@ -31,7 +30,7 @@ class RecipeRepository
 
     public function update(Recipe $recipe): Recipe
     {
-        $statement = $this->connection->prepare("UPDATE recipes SET name=?,ingredients=?,steps=?,note=?,category_id=?, image = ? WHERE id=?");
+        $statement = $this->connection->prepare("UPDATE recipes SET name=?,ingredients=?,steps=?,note=?,category_id=?, image = ? WHERE recipe_id=?");
         $statement->execute([$recipe->name, $recipe->ingredients, $recipe->steps, $recipe->note, $recipe->categoryId, $recipe->image, $recipe->recipeId]);
 
         return $recipe;
@@ -39,7 +38,7 @@ class RecipeRepository
 
     public function delete(int $recipeId): void
     {
-        $statement = $this->connection->prepare("DELETE FROM recipes WHERE id=?");
+        $statement = $this->connection->prepare("DELETE FROM recipes WHERE recipe_id=?");
         $statement->execute([$recipeId]);
     }
 
@@ -61,6 +60,7 @@ class RecipeRepository
                 $recipe->steps = $row['steps'];
                 $recipe->note = $row['note'];
                 $recipe->createdAt = $row['created_at'];
+                $recipe->image = $row['image'];
                 $recipe->user = new User();
                 $recipe->user->id = $row['user_id'];
                 $recipe->user->email = $row['email'];

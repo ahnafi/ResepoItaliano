@@ -146,16 +146,22 @@ class UserService
             throw new ValidationException("Username is required");
         }
 
-        if (getimagesize($request->photo["tmp_name"]) === false) {
-            throw new ValidationException("File must be a image");
+        if ($request->photo == null && isset($request->photo["tmp_name"])) {
+            throw new ValidationException ("image cannot be empty");
         }
 
-        if (!in_array($request->photo["type"], ['image/jpeg', "image/jpg", 'image/png', 'image/gif'])) {
-            throw new ValidationException("Invalid image type");
+        if ($request->photo["error"] != UPLOAD_ERR_OK) {
+            throw new ValidationException ("image error");
+        }
+
+        $validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+        if (!in_array($request->photo["type"], $validTypes)) {
+            throw new ValidationException ("image type is not allowed");
         }
 
         if ($request->photo["size"] > 2 * 1024 * 1024) {
-            throw new ValidationException("File size too large\nMax file size 2 MB");
+            throw new ValidationException ("image size is too large");
         }
 
     }

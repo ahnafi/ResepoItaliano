@@ -39,7 +39,9 @@ class SavedRecipeService
             $recipe = $this->recipeRepository->find($request->recipeId);
 
             // validasi apakah sudah ada saved recipes yang sudah disimpan
-
+            if ($this->savedRecipeRepository->alreadySaved($user->id, $recipe->recipeId)) {
+                throw new ValidationException("recipe has already been saved");
+            }
 
             $saved = new SavedRecipes();
             $saved->recipeId = $recipe->recipeId;
@@ -96,7 +98,7 @@ class SavedRecipeService
 
     private function validateRemoveSavedRecipeRequest(RemoveSavedRecipe $request): void
     {
-        if ($request->userId == null || $request->savedId == null or $request->userId == "" or $request->savedId == "" or empty($request->userId) or empty($request->recipeId)) {
+        if ($request->userId == null || $request->savedId == null or $request->userId == "" or $request->savedId == "" or empty($request->userId)) {
             throw new ValidationException("UserId and SaveId are required");
         }
     }

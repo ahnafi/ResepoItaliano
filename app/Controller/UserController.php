@@ -4,14 +4,17 @@ namespace Controller;
 
 use Config\Database;
 use Exception\ValidationException;
+use Model\RecipeSearchParams;
 use Model\UserLoginRequest;
 use Model\UserPasswordRequest;
 use Model\UserRegisterRequest;
 use Model\UserUpdateRequest;
+use Repository\CategoryRepository;
 use Repository\RecipeRepository;
 use Repository\SavedRecipeRepository;
 use Repository\SessionRepository;
 use Repository\UserRepository;
+use Service\RecipeService;
 use Service\SavedRecipeService;
 use Service\SessionService;
 use Service\UserService;
@@ -23,6 +26,7 @@ class UserController
 
     private UserService $userService;
     private SessionService $sessionService;
+    private RecipeService $recipeService;
     private SavedRecipeService $savedRecipeService;
 
     public function __construct()
@@ -38,6 +42,9 @@ class UserController
         $recipeRepository = new RecipeRepository($connection);
         $savedRecipeRepository = new SavedRecipeRepository($connection);
         $this->savedRecipeService = new SavedRecipeService($savedRecipeRepository, $userRepository, $recipeRepository);
+
+        $categoryRepository = new CategoryRepository($connection);
+        $this->recipeService = new RecipeService($recipeRepository, $categoryRepository, $userRepository);
     }
 
     public function register(): void
@@ -95,12 +102,7 @@ class UserController
 
         $model = [
             "title" => "Update profile",
-            "user" => [
-                "id" => $user->id,
-                "username" => $user->username,
-                "email" => $user->email,
-                "photo_profile" => $user->profileImage
-            ],
+            "user" => (array) $user,
         ];
 
         View::render("User/update", $model);
@@ -115,18 +117,19 @@ class UserController
             $request = new UserUpdateRequest();
             $request->username = $_POST["username"];
             $request->userId = $user->id;
-            if (isset($_FILES['profile']) && $_FILES['profile']['error'] == UPLOAD_ERR_OK) {
-                $request->photo = $_FILES['profile'];
-            } else {
-                $request->photo = null;
-            }
+            $request->photo = $_FILES['profile'] ?? null;
+//            if (isset($_FILES['profile']) && $_FILES['profile']['error'] == UPLOAD_ERR_OK) {
+//                $request->photo = $_FILES['profile'];
+//            } else {
+//                $request->photo = null;
+//            }
 
             $this->userService->update($request);
             Flasher::setFlash("profile updated successfully");
-            View::redirect("/profile");
+            View::redirect("/user/profile");
         } catch (ValidationException $e) {
             Flasher::setFlash("update failed : " . $e->getMessage());
-            View::redirect("/update");
+            View::redirect("/user/profile");
         }
     }
 
@@ -160,15 +163,45 @@ class UserController
     public function profile(): void
     {
         $user = $this->sessionService->current();
-        $saved = $this->savedRecipeService->getSavedRecipes($user->id);
 
         $model = [
             "title" => "Profile",
-            "user" => $user,
-            "savedRecipes" => $saved
+            "user" => (array)$user,
         ];
 
         View::render("User/profile", $model);
+    }
+
+    public function savedRecipes(): void
+    {
+        $user = $this->sessionService->current();
+
+        $saved = $this->savedRecipeService->getSavedRecipes($user->id);
+
+        $model = [
+            "title" => "saved recipes",
+            "user" => (array)$user,
+            "savedRecipes" => $saved
+        ];
+
+        View::render("User/saved", $model);
+    }
+
+    public function manageRecipes()
+    {
+        $user = $this->sessionService->current();
+        $req = new RecipeSearchParams();
+        $req->userId = $user->id;
+        $recipe = $this->recipeService->UserRecipes($req);
+
+        $model = [
+            "title" => "Manage saved recipes",
+            "user" => (array)$user,
+            'total' => $recipe->total,
+            'recipes' => $recipe->recipes
+        ];
+
+        View::render("User/manage", $model);
     }
 
 }

@@ -27,8 +27,8 @@ Router::add("GET", "/recipe/update/([0-9]*)", HomeController::class, 'updateReci
 
 Router::add("POST", "/recipe/add", HomeController::class, 'postAddRecipe', [MustLoginMiddleware::class]);
 Router::add("POST", "/recipe/remove", HomeController::class, 'postRemoveRecipe', [MustLoginMiddleware::class]);
-Router::add("POST", "/recipe/update", HomeController::class, 'postUpdateRecipe', [MustLoginMiddleware::class]);
-Router::add("POST", "/recipe/save", HomeController::class, 'postSaveRecipe', [MustLoginMiddleware::class]);
+Router::add("POST", "/recipe/update/([0-9]*)", HomeController::class, 'postUpdateRecipe', [MustLoginMiddleware::class]);
+Router::add("POST", "/recipe/save/([0-9]*)", HomeController::class, 'postSaveRecipe', [MustLoginMiddleware::class]);
 Router::add("POST", "/recipe/save/remove", HomeController::class, 'postRemoveSavedRecipe', [MustLoginMiddleware::class]);
 
 // user
@@ -36,6 +36,8 @@ Router::add("GET", "/login", UserController::class, "login", [MustNotLoginMiddle
 Router::add("GET", "/logout", UserController::class, "logout", [MustLoginMiddleware::class]);
 Router::add("GET", "/register", UserController::class, "register", [MustNotLoginMiddleware::class]);
 Router::add("GET", "/user/profile", UserController::class, "profile", [MustLoginMiddleware::class]);
+Router::add("GET", "/user/profile/saved-recipe", UserController::class, "savedRecipes", [MustLoginMiddleware::class]);
+Router::add("GET", "/user/profile/manage-recipes", UserController::class, "manageRecipes", [MustLoginMiddleware::class]);
 
 Router::add("POST", "/login", UserController::class, "postLogin", [MustNotLoginMiddleware::class]);
 Router::add("POST", "/register", UserController::class, "postRegister", [MustNotLoginMiddleware::class]);

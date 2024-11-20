@@ -49,13 +49,13 @@ CREATE TABLE recipes
     FOREIGN KEY (category_id) REFERENCES categories (category_id)
 );
 
-CREATE TABLE recipe_images
-(
-    image_id   INT AUTO_INCREMENT PRIMARY KEY,
-    recipe_id  INT          NOT NULL,
-    image_name VARCHAR(100) NOT NULL,
-    FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id) ON DELETE CASCADE
-);
+-- CREATE TABLE recipe_images
+-- (
+--     image_id   INT AUTO_INCREMENT PRIMARY KEY,
+--     recipe_id  INT          NOT NULL,
+--     image_name VARCHAR(100) NOT NULL,
+--     FOREIGN KEY (recipe_id) REFERENCES recipes (recipe_id) ON DELETE CASCADE
+-- );
 
 
 CREATE TABLE saved_recipes

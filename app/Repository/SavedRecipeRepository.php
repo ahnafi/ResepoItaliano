@@ -47,21 +47,40 @@ class SavedRecipeRepository
         }
     }
 
+    public function alreadySaved(int $userId, int $recipeId): ?SavedRecipes
+    {
+        $statement = $this->connection->prepare("select * from saved_recipes WHERE recipe_id = ? AND user_id = ?");
+        $statement->execute([$recipeId, $userId]);
+        try {
+            if ($row = $statement->fetch()) {
+                $savedRecipes = new SavedRecipes();
+                $savedRecipes->savedId = $row['saved_id'];
+                $savedRecipes->recipeId = $row['recipe_id'];
+                $savedRecipes->userId = $row['user_id'];
+                return $savedRecipes;
+            } else {
+                return null;
+            }
+        } finally {
+            $statement->closeCursor();
+        }
+    }
+
+
     public function getSaved(int $userId): array
     {
         // Query untuk mengambil resep yang disimpan berdasarkan user_id
         $query = "
         SELECT  
-            recipes.recipe_id, 
-            recipes.name, 
-            recipes.image, 
-            recipes.created_at, 
-            categories.category_name ,
+            recipes.*,
+            categories.*,
+            users.*,
             saved_id
-        FROM saved_recepies
-        INNER JOIN recipes ON saved_recepies.recipe_id = recipes.recipe_id
+        FROM saved_recipes
+        INNER JOIN recipes ON saved_recipes.recipe_id = recipes.recipe_id
         INNER JOIN categories ON recipes.category_id = categories.category_id
-        WHERE saved_recepies.user_id = ?
+        INNER JOIN users ON recipes.user_id = users.user_id
+        WHERE saved_recipes.user_id = ?
         ORDER BY recipes.created_at DESC
     ";
 
@@ -77,10 +96,13 @@ class SavedRecipeRepository
             $savedRecipes[] = [
                 'saved_id' => $row['saved_id'],
                 'recipe_id' => $row['recipe_id'],
-                'name' => $row['name'],
+                'title' => $row['name'],
                 'image' => $row['image'],
                 'created_at' => $row['created_at'],
                 'category_name' => $row['category_name'],
+                'ingredients' => $row['ingredients'],
+                'creator' => $row['username'],
+                'creator_profile' => $row['profile_image'],
             ];
         }
 

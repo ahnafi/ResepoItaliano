@@ -6,7 +6,6 @@ document
     .querySelector(".hamburger-menu")
     .addEventListener("click", function () {
         document.querySelector(".navigation-container").classList.toggle("active");
-        console.log("oke");
     });
 
 // Footer year
@@ -50,10 +49,9 @@ function gatherRecipeData() {
         .filter((value) => value.trim() !== ""); // Filter untuk menghapus input kosong
 
     // Menggabungkan semua bahan dan langkah dengan simbol pemisah, misalnya "; "
-    const ingredientsString = ingredients.join("; ");
-    const stepsString = steps.join("; ");
+    const ingredientsString = ingredients.join("###");
+    const stepsString = steps.join("###");
 
-    // Jika Anda ingin menggabungkan semua dalam satu string
     const recipeData = {
         title: document.getElementById("name").value,
         category: document.getElementById("category").value,
@@ -62,7 +60,11 @@ function gatherRecipeData() {
         note: document.getElementById("note").value,
     };
 
-    console.log(recipeData); // Anda bisa mengirimkan ini ke database
+    console.log(recipeData)
+
+    document.getElementById("valIngredients").value = ingredientsString;
+    document.getElementById("valSteps").value = stepsString;
+
 }
 
 // Menambahkan event listener pada tombol "Terbitkan"
