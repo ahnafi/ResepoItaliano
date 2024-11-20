@@ -36,6 +36,7 @@ Router::add("GET", "/login", UserController::class, "login", [MustNotLoginMiddle
 Router::add("GET", "/logout", UserController::class, "logout", [MustLoginMiddleware::class]);
 Router::add("GET", "/register", UserController::class, "register", [MustNotLoginMiddleware::class]);
 Router::add("GET", "/user/profile", UserController::class, "profile", [MustLoginMiddleware::class]);
+Router::add("GET", "/user/profile/password", UserController::class, "password", [MustLoginMiddleware::class]);
 Router::add("GET", "/user/profile/saved-recipe", UserController::class, "savedRecipes", [MustLoginMiddleware::class]);
 Router::add("GET", "/user/profile/manage-recipes", UserController::class, "manageRecipes", [MustLoginMiddleware::class]);
 

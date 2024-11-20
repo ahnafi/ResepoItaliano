@@ -200,7 +200,7 @@ class UserService
 
     private function ValidateUserPasswordRequest(UserPasswordRequest $request): void
     {
-        if ($request->password == "" || $request->userId == "" || empty($request->id) || empty($request->oldPassword) || $request->oldPassword == "" || empty($request->password)) {
+        if ($request->password == "" || empty($request->userId) || empty($request->oldPassword) || $request->oldPassword == "" || empty($request->password)) {
             throw new ValidationException("new Password is required");
         }
 

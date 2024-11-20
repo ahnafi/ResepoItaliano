@@ -102,7 +102,7 @@ class UserController
 
         $model = [
             "title" => "Update profile",
-            "user" => (array) $user,
+            "user" => (array)$user,
         ];
 
         View::render("User/update", $model);
@@ -147,10 +147,10 @@ class UserController
             $this->userService->updatePassword($request);
 
             Flasher::setFlash("password updated successfully");
-            View::redirect("/profile");
+            View::redirect("/user/profile/password");
         } catch (ValidationException $e) {
             Flasher::setFlash("update password failed : " . $e->getMessage());
-            View::redirect("/profile");
+            View::redirect("/user/profile/password");
         }
     }
 
@@ -192,6 +192,7 @@ class UserController
         $user = $this->sessionService->current();
         $req = new RecipeSearchParams();
         $req->userId = $user->id;
+        $req->page = (isset($_GET['page']) && $_GET['page'] !== "") ? (int)$_GET['page'] : 1;
         $recipe = $this->recipeService->UserRecipes($req);
 
         $model = [
@@ -202,6 +203,18 @@ class UserController
         ];
 
         View::render("User/manage", $model);
+    }
+
+    public function password()
+    {
+        $user = $this->sessionService->current();
+
+        $model = [
+            "title" => "Change password",
+            "user" => (array)$user,
+        ];
+
+        View::render("User/password", $model);
     }
 
 }

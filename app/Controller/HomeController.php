@@ -196,7 +196,7 @@ class HomeController
             $req = new RecipeSearchParams();
             $req->title = htmlspecialchars($_GET['title'] ?? "");
             $req->category = (int)htmlspecialchars($_GET['cat'] ?? "");
-            $req->page = isset($_GET['page']) && $_GET['page'] == "" ? 1 : (int)$_GET['page'];
+            $req->page = (isset($_GET['page']) && $_GET['page'] !== "") ? (int)$_GET['page'] : 1;
 
             $result = $this->recipeService->searchRecipe($req);
 

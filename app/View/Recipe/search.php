@@ -11,6 +11,27 @@ $category = [
     'Burrata',
     'Bruschetta'
 ];
+
+//current url
+$url = $_SERVER["REQUEST_URI"];
+
+// Pagination setup
+$perPage = 20; // Jumlah resep per halaman
+$totalPages = ceil($totalRecipes / $perPage); // Hitung total halaman
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Ambil halaman saat ini
+$currentPage = max(1, min($totalPages, $currentPage)); // Validasi halaman saat ini
+
+// Function to build pagination URL
+function buildPaginationUrl($page)
+{
+    $parsedUrl = parse_url($_SERVER["REQUEST_URI"]);
+    parse_str($parsedUrl['query'] ?? '', $queryParams);
+    unset($queryParams['page']); // Hapus parameter 'page' jika ada
+    $queryParams['page'] = $page; // Tambahkan parameter 'page' baru
+    $newQuery = http_build_query($queryParams); // Bangun kembali query string
+    return $parsedUrl['path'] . ($newQuery ? '?' . $newQuery : ''); // Gabungkan kembali
+}
+
 ?>
 
 <!--navbar-->
@@ -38,7 +59,6 @@ include_once __DIR__ . "/../Components/navbar.php";
         <h2 class="title-font-size">
             <?php
             $text = "Mencari ";
-
             $title = isset($_GET["title"]) ? htmlspecialchars($_GET["title"]) : '';
             $categoryKey = $_GET["cat"] ?? null;
 
@@ -48,12 +68,9 @@ include_once __DIR__ . "/../Components/navbar.php";
             } else {
                 $text .= $category[$categoryKey];
             }
-
-
             echo $text;
             ?>
         </h2>
-        <!-- <h2 class="title-font-size">Hasil pencarian "Enak"</h2> -->
         <div class="search-list">
             <?php foreach ($recipes as $recipe): ?>
                 <div class="recipe-item">
@@ -82,13 +99,26 @@ include_once __DIR__ . "/../Components/navbar.php";
                         </p>
                     </div>
                     <div class="recipe-time-past small-font-size">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                            <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
-                        </svg>
                         <span><?= timeAgo($recipe['createdAt']) ?></span>
                     </div>
                 </div>
             <?php endforeach; ?>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <?php if ($currentPage > 1): ?>
+                <a href="<?= buildPaginationUrl($currentPage - 1) ?>">Previous</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="<?= buildPaginationUrl($i) ?>"
+                   class="<?= ($i === $currentPage) ? 'active' : '' ?>"><?= $i ?></a>
+            <?php endfor; ?>
+
+            <?php if ($currentPage < $totalPages): ?>
+                <a href="<?= buildPaginationUrl($currentPage + 1) ?>">Next</a>
+            <?php endif; ?>
         </div>
     </div>
 </div>

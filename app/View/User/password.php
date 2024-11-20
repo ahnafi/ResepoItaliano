@@ -21,29 +21,22 @@ include_once __DIR__ . "/../Components/navbar.php"
         <!-- Aside End -->
         <!-- Profile Settings Start -->
         <div class="profile-settings-content">
-            <h1 class="big-normal-font-size">Pengaturan Akun</h1>
+            <h1 class="big-normal-font-size">Ganti Password</h1>
             <div class="profile-settings-form">
-                <form action="/user/profile" method="post" enctype="multipart/form-data">
-                    <div id="profileSettingsPhoto" class="form-group profile-settings-photo">
-                        <img src="/images/profiles/<?= $user["profileImage"] ?? "default.jpg" ?>" alt="Profile photo"
-                             class="profile-photo"
-                             id="profilePreview"/>
-                        <div class="profile-image-upload">
-                            <label for="profilePhoto" class="font-semibold cursor-pointer text-light-base">
-                                Ganti Foto Profil
-                            </label>
-                            <input type="file" name="profile" id="profilePhoto" accept=".jpg, .jpeg, .png" onchange="previewProfilePhoto()"/>
-                        </div>
+                <form action="/user/profile/password" method="post">
+                    <div class="form-group">
+                        <label for="oldPassword">Password lama</label>
+                        <input type="password" name="oldPassword" id="oldPassword" placeholder="Masukan Password lama"
+                               required/>
                     </div>
                     <div class="form-group">
-                        <label for="name">Nama</label>
-                        <input type="text" name="username" id="name" placeholder="Nama" required
-                               value="<?= $user["username"] ?>"/>
+                        <label for="newPassword">Password baru</label>
+                        <input type="password" name="newPassword" id="newPassword" placeholder="Masukan password baru" />
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" placeholder="Email" readonly
-                               value="<?= $user["email"] ?>"/>
+                        <label for="verifPassword">Verifikasi Password baru</label>
+                        <input type="password" name="confirmPassword" id="verifPassword"
+                               placeholder="Verifikasi" />
                     </div>
                     <button type="submit" class="save-button">
                         Simpan Perubahan
