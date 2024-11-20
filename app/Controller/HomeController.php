@@ -14,6 +14,7 @@ use Model\RecipeSearchParams;
 use Model\RemoveSavedRecipe;
 use Model\UpdateRecipeRequest;
 use Repository\CategoryRepository;
+
 //use Repository\RecipeImageRepository;
 use Repository\RecipeRepository;
 use Repository\SavedRecipeRepository;
@@ -105,7 +106,7 @@ class HomeController
 
         $model = [
             "title" => "Create Recipe",
-            "user" =>(array)$user,
+            "user" => (array)$user,
         ];
 
         View::render("Recipe/create", $model);
@@ -195,7 +196,7 @@ class HomeController
             $req = new RecipeSearchParams();
             $req->title = htmlspecialchars($_GET['title'] ?? "");
             $req->category = (int)htmlspecialchars($_GET['cat'] ?? "");
-            $req->page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $req->page = isset($_GET['page']) && $_GET['page'] == "" ? 1 : (int)$_GET['page'];
 
             $result = $this->recipeService->searchRecipe($req);
 
