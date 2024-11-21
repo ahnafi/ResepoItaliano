@@ -80,7 +80,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                             Unggah Gambar:
                         </label>
                         <div class="custom-file-upload">
-                            <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png" required>
+                            <input type="file" id="image-recipe-upload" name="image" accept=".jpg, .jpeg, .png" required>
                             <span>Pilih Gambar</span>
                         </div>
                         <div id="image-preview-container" class="image-preview-container">
@@ -104,10 +104,10 @@ include_once __DIR__ . "/../Components/navbar.php";
             </div>
             <div class="add-recipe-aside-action">
                 <form id="asideForm" action="">
-                    <button type="submit" id="submitAside" name="upload">
+                    <button class="normal-font-size" type="submit" id="submitAside" name="upload">
                         Terbitkan
                     </button>
-                    <button type="button" name="clear">Bersihkan</button>
+                    <button class="normal-font-size" type="button" name="clear">Bersihkan</button>
                 </form>
             </div>
         </div>

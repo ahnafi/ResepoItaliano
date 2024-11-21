@@ -151,4 +151,69 @@ function previewProfilePhoto() {
     }
 }
 
+// Preview image upload
+const selectedFiles = []; // Array to store selected files
 
+document.getElementById("image-recipe-upload").addEventListener("change", function(event) {
+    const previewContainer = document.getElementById("image-preview-container");
+
+    // Get the newly selected files
+    const files = Array.from(event.target.files);
+
+    files.forEach(file => {
+        // Add file to selectedFiles
+        selectedFiles.push(file);
+
+        const fileReader = new FileReader();
+
+        fileReader.onload = function(e) {
+            // Create preview element
+            const previewElement = document.createElement("div");
+            previewElement.classList.add("file-preview");
+
+            // Add remove button to each image
+            const removeButton = document.createElement("span");
+            removeButton.classList.add("remove-button", "normal-font-size");
+            removeButton.textContent = "×";
+            removeButton.onclick = function() {
+                // Remove this preview element
+                previewElement.remove();
+
+                // Remove file from selectedFiles
+                const indexToRemove = selectedFiles.indexOf(file);
+                if (indexToRemove > -1) {
+                    selectedFiles.splice(indexToRemove, 1);
+                }
+
+                // Recreate DataTransfer and update file input
+                const dataTransfer = new DataTransfer();
+                selectedFiles.forEach(f => dataTransfer.items.add(f));
+                document.getElementById("image-recipe-upload").files = dataTransfer.files;
+            };
+
+            previewElement.appendChild(removeButton);
+
+            // If file is an image, display it
+            if (file.type.startsWith("image/")) {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.classList.add("preview-image");
+                previewElement.appendChild(img);
+            } else {
+                // If not an image, display file name
+                const fileName = document.createElement("p");
+                fileName.textContent = file.name;
+                previewElement.appendChild(fileName);
+            }
+
+            previewContainer.appendChild(previewElement);
+        };
+
+        fileReader.readAsDataURL(file);
+    });
+
+    // Recreate DataTransfer and update file input
+    const dataTransfer = new DataTransfer();
+    selectedFiles.forEach(f => dataTransfer.items.add(f));
+    document.getElementById("image-recipe-upload").files = dataTransfer.files;
+});

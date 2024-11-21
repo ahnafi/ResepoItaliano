@@ -84,9 +84,13 @@ include_once __DIR__ . "/../Components/navbar.php";
     })
 
     document.getElementById("share").addEventListener("click", () => {
-        const shareUrl = window.location.href
-        const shareText = "Lihat resep ini!";
-        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`;
-        window.open(whatsappUrl, '_blank');
-    })
+        const shareUrl = window.location.href;
+        const tempInput = document.createElement("textarea");
+        tempInput.value = shareUrl;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        alert("Tautan sudah disalin!");
+    });
 </script>

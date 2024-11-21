@@ -1120,6 +1120,7 @@ nav .logo span {
     display: inline-block;
     width: 100%;
     max-width: 300px;
+    margin-bottom: 20px;
 }
 
 .custom-file-upload input[type="file"] {
@@ -1134,53 +1135,38 @@ nav .logo span {
 .custom-file-upload span {
     display: block;
     background-color: var(--blue-base);
-    color: #fff;
+    color: var(--light-base);
     padding: 10px 15px;
     text-align: center;
     border-radius: 5px;
     border: 1px solid var(--blue-base);
-    font-size: 16px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    z-index: 1;
-}
-
-.custom-file-upload span:hover {
-    background-color: #0056b3;
-    color: #fff;
 }
 
 .image-preview-container {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
     gap: 8px;
+    max-width: 256px;
 }
 
-.image-preview {
+.file-preview {
     position: relative;
-    width: 144px;
-    border: 1px solid var(--dark-base);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    aspect-ratio: 4/3;
-    overflow: visible;
 }
 
-.image-preview img {
-    width: 100%;
-    height: 100%;
+.image-preview-container .file-preview img {
+    max-width: 256px;
+    aspect-ratio: 16/9;
     object-fit: cover;
     border-radius: 12px;
 }
 
-.image-preview .remove-button {
+.image-preview-container .remove-button {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -8px;
+    right: -8px;
     background-color: var(--red-base);
     color: var(--light-base);
+    font-weight: 900;
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -1188,9 +1174,11 @@ nav .logo span {
     align-items: center;
     justify-content: center;
     padding: 4px;
+    width: 30px;
+    height: 30px;
 }
 
-.image-preview .remove-button svg {
+.image-preview-container .remove-button svg {
     width: 16px;
     height: 16px;
 }
