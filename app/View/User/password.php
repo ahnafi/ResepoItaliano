@@ -25,18 +25,18 @@ include_once __DIR__ . "/../Components/navbar.php"
             <div class="profile-settings-form">
                 <form action="/user/profile/password" method="post">
                     <div class="form-group">
-                        <label for="oldPassword">Password lama</label>
-                        <input type="password" name="oldPassword" id="oldPassword" placeholder="Masukan Password lama"
+                        <label for="oldPassword">Password Lama</label>
+                        <input type="password" name="oldPassword" id="oldPassword" placeholder="Masukan password lama..."
                                required/>
                     </div>
                     <div class="form-group">
-                        <label for="newPassword">Password baru</label>
-                        <input type="password" name="newPassword" id="newPassword" placeholder="Masukan password baru" />
+                        <label for="newPassword">Password Baru</label>
+                        <input type="password" name="newPassword" id="newPassword" placeholder="Masukan password baru..." />
                     </div>
                     <div class="form-group">
-                        <label for="verifPassword">Verifikasi Password baru</label>
+                        <label for="verifPassword">Verifikasi Password Baru</label>
                         <input type="password" name="confirmPassword" id="verifPassword"
-                               placeholder="Verifikasi" />
+                               placeholder="Konfirmasi password kembali..." />
                     </div>
                     <button type="submit" class="save-button">
                         Simpan Perubahan

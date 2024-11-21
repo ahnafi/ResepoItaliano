@@ -98,7 +98,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                     </div>
                 <?php endforeach; ?>
             </div>
-            <div>
+            <div class="pagination">
                 <?php
                 // Pagination
                 if ($currentPage > 1): ?>

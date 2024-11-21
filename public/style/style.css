@@ -1312,17 +1312,87 @@ nav .logo span {
 .search {
     max-width: 1024px;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
-.search h2 {
+.search .search-head h2 {
     font-weight: 700;
     margin-bottom: 12px;
 }
 
+.search .search-head .search-form form {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.search .search-head .search-form form select {
+    padding: 12px;
+    border: none;
+    outline: none;
+    font-family: "Nunito", sans-serif;
+    border-radius: 12px;
+}
+
+.search .search-head .search-form form input {
+    padding: 12px;
+    border: none;
+    outline: none;
+    font-family: "Nunito", sans-serif;
+    border-radius: 12px;
+    width: 296px;
+}
+
+.search .search-head .search-form form button {
+    background-color: var(--blue-base);
+    color: var(--light-base);
+    font-weight: 700;
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 12px;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .search-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
     gap: 24px;
+}
+
+.pagination {
+    display: flex;
+    margin-top: 24px;
+    gap: 8px;
+    justify-content: center;
+}
+
+.pagination a {
+    color: var(--dark-base);
+    border: 2px solid var(--dark-base);
+    font-weight: 700;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 12px;
+    outline: none;
+}
+
+.pagination a.active {
+    background-color: var(--blue-base);
+    color: var(--light-base);
+    border: none;
+}
+
+@media screen and (max-width: 640px) {
+    .search-list {
+        gap: 8px;
+        grid-template-columns: 1fr 1fr;
+    }
 }
 /* Search End */
 
@@ -1502,7 +1572,7 @@ button[name="delete"]:hover {
     border: none;
 }
 
-.recipe-action button svg {
+.recipe-action form button svg {
     width: 40px;
     height: 40px;
     background-color: var(--red-base);
@@ -1515,6 +1585,29 @@ button[name="delete"]:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    margin-top: 24px;
+    gap: 8px;
+    justify-content: center;
+}
+
+.pagination a {
+    color: var(--dark-base);
+    border: 2px solid var(--dark-base);
+    font-weight: 700;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 12px;
+    outline: none;
+}
+
+.pagination a.active {
+    background-color: var(--blue-base);
+    color: var(--light-base);
+    border: none;
 }
 
 /* Manage Recipes End */

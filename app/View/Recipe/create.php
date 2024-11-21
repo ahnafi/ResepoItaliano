@@ -107,7 +107,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                     <button class="normal-font-size" type="submit" id="submitAside" name="upload">
                         Terbitkan
                     </button>
-                    <button class="normal-font-size" type="button" name="clear">Bersihkan</button>
+                    <button id="clearButton" class="normal-font-size" type="button" name="clear">Bersihkan</button>
                 </form>
             </div>
         </div>

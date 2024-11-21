@@ -217,3 +217,10 @@ document.getElementById("image-recipe-upload").addEventListener("change", functi
     selectedFiles.forEach(f => dataTransfer.items.add(f));
     document.getElementById("image-recipe-upload").files = dataTransfer.files;
 });
+
+// JavaScript to handle the clear button click event
+document.getElementById("clearButton").addEventListener("click", function() {
+    document.getElementById("recipeForm").reset();
+    // Clear the preview container if needed
+    document.getElementById("image-preview-container").innerHTML = "";
+});

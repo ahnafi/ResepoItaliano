@@ -75,7 +75,7 @@ class HomeController
 
 
         $model = [
-            "title" => "About ",
+            "title" => "Tentang Kami",
         ];
 
         if ($user != null) {
@@ -90,7 +90,7 @@ class HomeController
         $user = $this->sessionService->current();
 
         $model = [
-            "title" => "404 Page Not Found",
+            "title" => "404 Halaman Tidak Ditemukan",
         ];
 
         if ($user != null) {
@@ -105,7 +105,7 @@ class HomeController
         $user = $this->sessionService->current();
 
         $model = [
-            "title" => "Create Recipe",
+            "title" => "Tambahkan Resep",
             "user" => (array)$user,
         ];
 
@@ -132,7 +132,7 @@ class HomeController
 //            }
 
             $this->recipeService->uploadRecipe($req);
-            Flasher::setFlash("Success create recipe");
+            Flasher::setFlash("Resep berhasil ditambahkan");
             View::redirect("/");
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
@@ -185,7 +185,7 @@ class HomeController
         $user = $this->sessionService->current();
 
         $model = [
-            "title" => "Search recipes",
+            "title" => "Cari Resep",
         ];
 
         if ($user != null) {
@@ -217,7 +217,7 @@ class HomeController
         $user = $this->sessionService->current();
 
         $model = [
-            "title" => "Update Recipe",
+            "title" => "Perbarui Resep",
             "user" => (array)$user,
         ];
 
@@ -251,7 +251,7 @@ class HomeController
             $req->image = $_FILES['image'] ?? null;
 
             $this->recipeService->updateRecipe($req);
-            Flasher::setFlash("Update recipe successfully");
+            Flasher::setFlash("Resep berhasil diperbarui");
             View::redirect("/recipe/update/" . $recipeId);
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
@@ -269,7 +269,7 @@ class HomeController
             $req->userId = $user->id;
             $this->recipeService->deleteRecipe($req);
 
-            Flasher::setFlash("Remove recipe successfully");
+            Flasher::setFlash("Resep berhasil dihapus");
             View::redirect("/user/profile/manage-recipes");
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
@@ -289,7 +289,7 @@ class HomeController
 
             $this->savedRecipeService->add($req);
 
-            Flasher::setFlash("Success saving recipe");
+            Flasher::setFlash("Resep berhasil disimpan");
             View::redirect("/recipe/$recipeId");
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
@@ -307,7 +307,7 @@ class HomeController
             $req->savedId = (int)htmlspecialchars($_POST['savedId']);
             var_dump($req);
             $this->savedRecipeService->remove($req);
-            Flasher::setFlash("Success removing recipe");
+            Flasher::setFlash("Resep berhasil dihapus dari daftar simpan");
             View::redirect("/user/profile/saved-recipe");
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());

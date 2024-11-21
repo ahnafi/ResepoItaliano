@@ -50,7 +50,7 @@ class UserController
     public function register(): void
     {
         View::render("User/register", [
-            "title" => "Register",
+            "title" => "Daftar",
         ]);
     }
 
@@ -65,7 +65,7 @@ class UserController
             $result = $this->userService->register($request);
 //            //langsung login
 //            $this->sessionService->create($result->user->id);
-            Flasher::setFlash("Registration successfull");
+            Flasher::setFlash("Akun berhasil dibuat, silahkan login");
             View::redirect("/login");
         } catch (ValidationException $e) {
             Flasher::setFlash("register failed : " . $e->getMessage());
@@ -76,7 +76,7 @@ class UserController
     public function login(): void
     {
         View::render("User/login", [
-            "title" => "Login",
+            "title" => "Masuk",
         ]);
     }
 
@@ -91,7 +91,7 @@ class UserController
             $this->sessionService->create($response->user->id);
             View::redirect("/");
         } catch (ValidationException $e) {
-            Flasher::setFlash("login failed : " . $e->getMessage());
+            Flasher::setFlash("Gagal masuk : " . $e->getMessage());
             View::redirect("/login");
         }
     }
@@ -101,7 +101,7 @@ class UserController
         $user = $this->sessionService->current();
 
         $model = [
-            "title" => "Update profile",
+            "title" => "Perbarui Akun",
             "user" => (array)$user,
         ];
 
@@ -125,7 +125,7 @@ class UserController
 //            }
 
             $this->userService->update($request);
-            Flasher::setFlash("profile updated successfully");
+            Flasher::setFlash("Akun berhasil diperbarui");
             View::redirect("/user/profile");
         } catch (ValidationException $e) {
             Flasher::setFlash("update failed : " . $e->getMessage());
@@ -146,7 +146,7 @@ class UserController
 
             $this->userService->updatePassword($request);
 
-            Flasher::setFlash("password updated successfully");
+            Flasher::setFlash("Password berhasil diperbarui");
             View::redirect("/user/profile/password");
         } catch (ValidationException $e) {
             Flasher::setFlash("update password failed : " . $e->getMessage());
@@ -165,7 +165,7 @@ class UserController
         $user = $this->sessionService->current();
 
         $model = [
-            "title" => "Profile",
+            "title" => "Pengaturan Akun",
             "user" => (array)$user,
         ];
 
@@ -179,7 +179,7 @@ class UserController
         $saved = $this->savedRecipeService->getSavedRecipes($user->id);
 
         $model = [
-            "title" => "saved recipes",
+            "title" => "Resep yang Disimpan",
             "user" => (array)$user,
             "savedRecipes" => $saved
         ];
@@ -196,7 +196,7 @@ class UserController
         $recipe = $this->recipeService->UserRecipes($req);
 
         $model = [
-            "title" => "Manage saved recipes",
+            "title" => "Kelola Resep",
             "user" => (array)$user,
             'total' => $recipe->total,
             'recipes' => $recipe->recipes
@@ -210,7 +210,7 @@ class UserController
         $user = $this->sessionService->current();
 
         $model = [
-            "title" => "Change password",
+            "title" => "Ganti Password",
             "user" => (array)$user,
         ];
 
