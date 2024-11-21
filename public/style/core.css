@@ -193,6 +193,12 @@ h1, h2, h3, h4, h5, h6 {
     gap: 8px;
 }
 
+.menu-content h2 {
+    font-weight: 700;
+    border-bottom: 1px solid var(--dark-base); /* Indigo-100 */
+    padding: 0.625rem 0.75rem !important;
+}
+
 .aside-link {
     display: flex;
     align-items: center;

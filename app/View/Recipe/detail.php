@@ -1,6 +1,6 @@
 <?php
 $recipe = $model["recipe"] ?? [];
-$images = $recipe["recipe_images"];
+//$images = $recipe["recipe_images"];
 $ingredients = explode("###", $recipe["ingredients"]);
 $steps = explode("###", $recipe["steps"]);
 ?>

@@ -26,8 +26,7 @@
                     <li class="navigation-link">
                         <a href="/user/profile" class="profile-photo">
                             <img src="/images/profiles/<?= $model['user']['profileImage'] ?? "default.jpg" ?>"
-                                 alt="Profile photo"
-                                 class="profile-photo"/>
+                                 alt="Profile photo"/>
                             <span><?= $model['user']['username'] ?></span>
                         </a>
                     </li>
