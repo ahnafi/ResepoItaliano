@@ -21,8 +21,8 @@ $categories = [
         "icon" => "tiramisu.png"
     ],
     [
-        "name" => "Buratta",
-        "icon" => "buratta.png"
+        "name" => "Burrata",
+        "icon" => "burrata.png"
     ],
     [
         "name" => "Bruschetta",
@@ -63,15 +63,15 @@ include_once __DIR__ . "/../Components/navbar.php";
     <div class="categories">
         <h2 class="title-font-size">Kategori</h2>
         <div class="categories-list">
-            <div class="category-item">
+            <a class="category-item" href="/search">
                 <img src="/images/icons/italy.png" alt="Pasta"/>
-                <h3 class="subtitle-font-size">Semua</h3>
-            </div>
-            <?php foreach ($categories as $category): ?>
-                <div class="category-item">
+                <h3>Semua</h3>
+            </a>
+            <?php foreach ($categories as $key => $category): ?>
+                <a class="category-item" href="/search?cat=<?= $key + 1 ?>">
                     <img src="/images/icons/<?= $category["icon"] ?>" alt="icon <?= $category["name"] ?>"/>
-                    <h3 class="subtitle-font-size"><?= $category["name"] ?></h3>
-                </div>
+                    <h3><?= $category["name"] ?></h3>
+                </a>
             <?php endforeach; ?>
         </div>
     </div>

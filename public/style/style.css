@@ -26,10 +26,12 @@ nav .logo {
     align-items: center;
     gap: 4px;
 }
+
 nav .logo img {
     width: 48px;
     height: 48px;
 }
+
 nav .logo span {
     font-weight: 700;
 }
@@ -40,14 +42,17 @@ nav .logo span {
     align-items: center;
     gap: 24px;
 }
+
 .navigation-links {
     display: flex;
     align-items: center;
     gap: 24px;
 }
+
 .navigation-links a {
     font-weight: 700;
 }
+
 .register-button,
 .login-button {
     padding: 8px 16px;
@@ -57,6 +62,7 @@ nav .logo span {
     border-radius: 4px;
     cursor: pointer;
 }
+
 .login-button {
     background-color: transparent;
     border: 2px solid var(--dark-base);
@@ -70,6 +76,7 @@ nav .logo span {
     cursor: pointer;
     gap: 5px;
 }
+
 .hamburger-menu span {
     display: block;
     width: 24px;
@@ -185,6 +192,7 @@ nav .logo span {
         flex-direction: column;
     }
 }
+
 /* Footer End */
 
 /* Register Start */
@@ -265,6 +273,7 @@ nav .logo span {
         margin: 96px 24px 48px;
     }
 }
+
 /* Register End */
 
 /* Login Start */
@@ -426,6 +435,7 @@ nav .logo span {
         padding: 128px 24px 72px;
     }
 }
+
 /* Hero Section End */
 
 /* Achievements Start */
@@ -483,6 +493,7 @@ nav .logo span {
         display: none;
     }
 }
+
 /* Achievements End */
 
 /* Features Start */
@@ -542,6 +553,7 @@ nav .logo span {
         height: 32px;
     }
 }
+
 /* Features End */
 
 /* Testimonials Start */
@@ -616,6 +628,7 @@ nav .logo span {
         height: 32px;
     }
 }
+
 /* Testimonials End */
 
 /* Invitation Start */
@@ -639,6 +652,7 @@ nav .logo span {
 .invitation-content h2 {
     font-weight: 700;
 }
+
 .invitation-content h2 > span {
     background-color: var(--amber-base);
 }
@@ -681,6 +695,7 @@ nav .logo span {
         z-index: -1;
     }
 }
+
 /* Invitation End */
 /* About Us End */
 
@@ -760,6 +775,21 @@ nav .logo span {
     flex: 1;
     border: 3px solid var(--green-base);
     background-color: rgba(22, 163, 74, 0.1);
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.categories-list .category-item:hover {
+    background-color: rgba(22, 163, 74, 0.6);
+    color: white;
+}
+
+.categories-list .category-item img {
+    width: 64px;
+    height: 64px;
+}
+
+.categories-list .category-item h3 {
+    font-size: 1.25rem;
 }
 
 @media screen and (max-width: 640px) {
@@ -777,6 +807,7 @@ nav .logo span {
         height: 64px;
     }
 }
+
 /* Categories End */
 
 /* Recipes Start */
@@ -808,6 +839,16 @@ nav .logo span {
     border-radius: 24px;
     border: 3px solid var(--green-base);
     background-color: rgba(22, 163, 74, 0.1);
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.recipe-item:hover {
+    background-color: rgba(22, 163, 74, 0.6);
+    color: white;
+}
+
+.recipe-item:hover h3 {
+    color: white;
 }
 
 .recipe-item .user-recipe {
@@ -831,6 +872,7 @@ nav .logo span {
 
 .recipe-item h3 {
     font-weight: 700;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .recipe-item p {
@@ -900,9 +942,11 @@ nav .logo span {
     border-radius: 12px;
     border: none;
 }
+
 .add-recipe-aside-action form button[name="clear"] {
     background-color: var(--red-base);
 }
+
 /* Add Recipe Aside End */
 
 /* Add Recipe Content Start */
@@ -968,6 +1012,7 @@ nav .logo span {
     gap: 4px;
     margin-bottom: 4px;
 }
+
 #stepsList > div input,
 #ingredientsList > div input {
     flex: 1;
@@ -1072,6 +1117,7 @@ nav .logo span {
         gap: 8px;
     }
 }
+
 /* Add Recipe Content End */
 
 /* Add Recipe End */
@@ -1253,6 +1299,7 @@ nav .logo span {
         height: 128px;
     }
 }
+
 /* Search End */
 
 /* Profile Settings Start */
@@ -1426,7 +1473,7 @@ button[name="delete"]:hover {
     background-color: var(--blue-base);
 }
 
-.recipe-action button  {
+.recipe-action button {
     background-color: transparent;
     border: none;
 }
@@ -1528,7 +1575,7 @@ button[name="delete"]:hover {
     background-color: var(--blue-base);
 }
 
-.recipe-action button  {
+.recipe-action button {
     background-color: transparent;
     border: none;
 }
@@ -1547,4 +1594,5 @@ button[name="delete"]:hover {
     align-items: center;
     justify-content: center;
 }
+
 /* Saved Recipes End */

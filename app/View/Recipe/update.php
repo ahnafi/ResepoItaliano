@@ -57,6 +57,9 @@ include_once __DIR__ . "/../Components/navbar.php";
                         <button class="normal-font-size" type="button" onclick="addIngredient()">
                             Tambah Bahan
                         </button>
+                        <button class="normal-font-size" type="button" onclick="removeIngredient()">
+                            Hapus Bahan
+                        </button>
                     </div>
                     <div class="form-group">
                         <label class="normal-font-size" for="steps">
@@ -73,6 +76,9 @@ include_once __DIR__ . "/../Components/navbar.php";
                         </div>
                         <button class="normal-font-size" type="button" onclick="addStep()">
                             Tambah Langkah
+                        </button>
+                        <button class="normal-font-size" type="button" onclick="removeStep()">
+                            Hapus Langkah
                         </button>
                     </div>
                     <div class="form-group">

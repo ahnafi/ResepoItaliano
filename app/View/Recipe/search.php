@@ -66,7 +66,10 @@ include_once __DIR__ . "/../Components/navbar.php";
             else if ($title) {
                 $text .= $title;
             } else {
-                $text .= $category[$categoryKey];
+                if ($categoryKey == "0") {
+                    $categoryKey = 1;
+                }
+                $text .= $category[$categoryKey - 1];
             }
             echo $text;
             ?>

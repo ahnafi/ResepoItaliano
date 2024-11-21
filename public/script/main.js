@@ -11,7 +11,6 @@ document
 // Footer year
 document.querySelector("#getYear").innerHTML = new Date().getFullYear();
 
-// Add Recipe
 function addIngredient() {
     ingredientCount++; // Increment count
     const ingredientsList = document.getElementById("ingredientsList");
@@ -34,6 +33,40 @@ function addStep() {
         <input type="text" class="step normal-font-size" required />
     `;
     stepsList.appendChild(newStepItem);
+}
+
+function removeIngredient() {
+    const ingredientsList = document.getElementById("ingredientsList");
+    if (ingredientsList.children.length > 1) { // Pastikan ada lebih dari satu bahan
+        ingredientsList.removeChild(ingredientsList.lastElementChild); // Hapus elemen terakhir
+        ingredientCount--; // Decrement count
+        updateIngredientNumbers(); // Perbarui nomor bahan
+    }
+}
+
+function removeStep() {
+    const stepsList = document.getElementById("stepsList");
+    if (stepsList.children.length > 1) { // Pastikan ada lebih dari satu langkah
+        stepsList.removeChild(stepsList.lastElementChild); // Hapus elemen terakhir
+        stepCount--; // Decrement count
+        updateStepNumbers(); // Perbarui nomor langkah
+    }
+}
+
+function updateIngredientNumbers() {
+    const ingredientsList = document.getElementById("ingredientsList");
+    const items = ingredientsList.getElementsByClassName("ingredient-item");
+    for (let i = 0; i < items.length; i++) {
+        items[i].getElementsByClassName("ingredient-number")[0].innerText = (i + 1) + ".";
+    }
+}
+
+function updateStepNumbers() {
+    const stepsList = document.getElementById("stepsList");
+    const items = stepsList.getElementsByClassName("step-item");
+    for (let i = 0; i < items.length; i++) {
+        items[i].getElementsByClassName("step-number")[0].innerText = (i + 1) + ".";
+    }
 }
 
 // Fungsi untuk mengumpulkan bahan dan langkah
@@ -68,17 +101,17 @@ function gatherRecipeData() {
 }
 
 // Menambahkan event listener pada tombol "Terbitkan"
-document
-    .getElementById("submitAside")
-    .addEventListener("click", function (event) {
-        event.preventDefault(); // Mencegah form kedua dari pengiriman default
+const btnSubmit = document
+    .getElementById("submitAside");
+btnSubmit.addEventListener("click", function (event) {
+    event.preventDefault(); // Mencegah form kedua dari pengiriman default
 
-        // Mengumpulkan data dari form pertama
-        gatherRecipeData(); // Panggil fungsi yang mengumpulkan data dari form pertama
+    // Mengumpulkan data dari form pertama
+    gatherRecipeData(); // Panggil fungsi yang mengumpulkan data dari form pertama
 
-        // Submit form pertama
-        document.getElementById("recipeForm").submit();
-    });
+    // Submit form pertama
+    document.getElementById("recipeForm").submit();
+});
 
 // Profile photo upload
 function previewProfilePhoto() {

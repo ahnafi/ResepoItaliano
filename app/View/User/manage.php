@@ -3,14 +3,10 @@ $recipes = $model['recipes'] ?? [];
 $total = $model['total'] ?? 0;
 
 // Pagination setup
-$perPage = 10; // Jumlah resep per halaman
+$perPage = 20; // Jumlah resep per halaman
 $totalPages = ceil($total / $perPage); // Hitung total halaman
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Ambil halaman saat ini
 $currentPage = max(1, min($totalPages, $currentPage)); // Validasi halaman saat ini
-
-// Ambil resep untuk halaman saat ini
-$offset = ($currentPage - 1) * $perPage;
-$recipes = array_slice($recipes, $offset, $perPage);
 
 // Function to build pagination URL
 function buildPaginationUrl($page)
