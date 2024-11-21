@@ -697,6 +697,106 @@ nav .logo span {
 }
 
 /* Invitation End */
+
+/* Contact Us Start */
+.contact-us-container {
+    padding: 24px 0;
+}
+
+.contact-us {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.contact-us-head h2 {
+    font-weight: 700;
+}
+
+.contact-us-body {
+    display: flex;
+    justify-content: space-between;
+    text-align: justify;
+    gap: 36px;
+}
+
+.contact-us-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact-us-content .social-medias-about-us {
+    display: flex;
+    gap: 16px;
+}
+
+.contact-us-content p > a {
+    background-color: var(--amber-base);
+    font-weight: 600;
+    color: var(--dark-base);
+}
+
+.contact-us-form {
+    flex: 1;
+}
+
+.contact-us-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact-us-form form label {
+    font-weight: 700;
+}
+
+.contact-us-form form input,
+.contact-us-form form textarea {
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    font-family: "Nunito", sans-serif;
+}
+
+.contact-us-form form button {
+    background-color: var(--green-base);
+    color: var(--light-base);
+    font-weight: 700;
+    cursor: pointer;
+    padding: 8px 16px;
+    border: none;
+}
+
+.social-medias-about-us svg {
+    width: 36px;
+    height: 36px;
+    color: var(--dark-base);
+}
+
+@media screen and (max-width: 1024px) {
+    .contact-us-container {
+        padding: 24px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .contact-us-body {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .contact-us-content .social-medias-about-us {
+        gap: 8px;
+    }
+
+    .contact-us-content .social-medias-about-us svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+/* Contact Us End */
 /* About Us End */
 
 /* Homepage Start */

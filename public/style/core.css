@@ -193,12 +193,6 @@ h1, h2, h3, h4, h5, h6 {
     gap: 8px;
 }
 
-h2 {
-    margin-bottom: 1rem;
-    font-weight: 700;
-    padding-left: 0.75rem;
-}
-
 .aside-link {
     display: flex;
     align-items: center;
