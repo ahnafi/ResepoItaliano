@@ -72,6 +72,20 @@ html,body {
     }
 }
 
+.card-title-font-size {
+    font-size: 1.15rem;
+}
+@media screen and (min-width: 768px) {
+    .card-title-font-size {
+        font-size: 1.25rem;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .card-title-font-size {
+        font-size: 1.3rem;
+    }
+}
+
 /* Standart Reset */
 * {
     margin: 0;
@@ -92,6 +106,10 @@ a {
 
 ul {
     list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    padding: 0 !important;
 }
 
 /* Aside Profile Start */

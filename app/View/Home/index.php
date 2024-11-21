@@ -94,11 +94,11 @@ include_once __DIR__ . "/../Components/navbar.php";
                     </div>
                     <div class="recipe-item-content">
                         <a href="/recipe/<?= $recipe['recipeId'] ?>">
-                            <h3 class="subtitle-font-size">
+                            <h3 class="card-title-font-size">
                                 <?= $recipe['name'] ?>
                             </h3>
                         </a>
-                        <p>
+                        <p class="recipe-steps-list">
                             <?php
                             $ingredients = [];
                             foreach (explode("###", $recipe['ingredients']) as $ingredient) {

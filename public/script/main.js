@@ -1,3 +1,24 @@
+// Text Truncate
+function textTruncate(str, length, ending) {
+    if (length == null) {
+        length = 100;
+    }
+    if (ending == null) {
+        ending = "...";
+    }
+    if (str.length > length) {
+        return str.substring(0, length - ending.length) + ending;
+    } else {
+        return str;
+    }
+}
+
+const recipeStepsList = document.querySelectorAll(".recipe-steps");
+recipeStepsList.forEach((recipeSteps) => {
+    recipeSteps.innerHTML = textTruncate(recipeSteps.innerHTML, 20, "...");
+});
+
+
 let ingredientCount = 1; // Untuk menghitung jumlah bahan
 let stepCount = 1; // Untuk menghitung jumlah langkah
 
@@ -129,3 +150,5 @@ function previewProfilePhoto() {
         reader.readAsDataURL(file);
     }
 }
+
+
