@@ -101,7 +101,7 @@ class UserService
     public function update(UserUpdateRequest $request): UserUpdateResponse
     {
         $this->ValidateUserUpdateRequest($request);
-        $pathFile = __DIR__ . "./../../public/images/profiles/";
+        $pathFile = __DIR__ . "/../../public/images/profiles/";
 
         try {
             Database::beginTransaction();
@@ -146,24 +146,23 @@ class UserService
             throw new ValidationException("Username is required");
         }
 
-        if ($request->photo == null && isset($request->photo["tmp_name"])) {
-            throw new ValidationException ("image cannot be empty");
+        if (isset($request->photo)) {
+            if ($request->photo == null && $request->photo["tmp_name"] == "") {
+                throw new ValidationException ("image cannot be empty");
+            }
+
+            if ($request->photo["error"] != UPLOAD_ERR_OK) {
+                throw new ValidationException ("image error");
+            }
+
+            if (!in_array($request->photo["type"], ['image/jpeg', 'image/png', 'image/jpg'])) {
+                throw new ValidationException ("image type is not allowed");
+            }
+
+            if ($request->photo["size"] > 2 * 1024 * 1024) {
+                throw new ValidationException ("image size is too large");
+            }
         }
-
-        if ($request->photo["error"] != UPLOAD_ERR_OK) {
-            throw new ValidationException ("image error");
-        }
-
-        $validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-
-        if (!in_array($request->photo["type"], $validTypes)) {
-            throw new ValidationException ("image type is not allowed");
-        }
-
-        if ($request->photo["size"] > 2 * 1024 * 1024) {
-            throw new ValidationException ("image size is too large");
-        }
-
     }
 
     public function updatePassword(UserPasswordRequest $request): UserUpdateResponse

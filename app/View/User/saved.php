@@ -82,4 +82,17 @@ include_once __DIR__ . "/../Components/navbar.php";
     function verification() {
         return confirm("Resep ini akan dihapus dari daftar tersimpan");
     }
+
+    const asideMenu = document.getElementById("asideMenu");
+    const asideToggle = document.getElementById("asideToggle");
+
+    asideToggle.addEventListener("click", () => {
+        const isOpen = asideMenu.style.transform === "translateX(0%)";
+        asideMenu.style.transform = isOpen
+            ? "translateX(-100%)"
+            : "translateX(0%)";
+        asideToggle.style.transform = isOpen
+            ? "translateX(0)"
+            : "translateX(16rem)";
+    });
 </script>

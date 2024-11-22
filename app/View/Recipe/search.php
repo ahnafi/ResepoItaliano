@@ -16,7 +16,7 @@ $category = [
 $url = $_SERVER["REQUEST_URI"];
 
 // Pagination setup
-$perPage = 3; // Jumlah resep per halaman
+$perPage = count($recipes) > 0 ? count($recipes) : 20; // Jumlah resep per halaman
 $totalPages = ceil($totalRecipes / $perPage); // Hitung total halaman
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Ambil halaman saat ini
 $currentPage = max(1, min($totalPages, $currentPage)); // Validasi halaman saat ini
@@ -63,13 +63,14 @@ include_once __DIR__ . "/../Components/navbar.php";
             </h1>
             <div class="search-form">
                 <form method="get" action="/search">
-                        <select name="cat" class="normal-font-size">
-                            <option selected value=""> Pilih Kategori</option>
-                            <?php foreach ($category as $key => $item): ?>
-                                <option value="<?= $key + 1 ?>"><?= $item ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    <input name="title" type="search" placeholder="Search Recipe" aria-label="Search" class="normal-font-size">
+                    <select name="cat" class="normal-font-size">
+                        <option selected value=""> Pilih Kategori</option>
+                        <?php foreach ($category as $key => $item): ?>
+                            <option value="<?= $key + 1 ?>"><?= $item ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <input name="title" type="search" placeholder="Search Recipe" aria-label="Search"
+                           class="normal-font-size">
                     <button type="submit" class="normal-font-size">Search</button>
                 </form>
             </div>
@@ -110,20 +111,20 @@ include_once __DIR__ . "/../Components/navbar.php";
             </div>
             <!-- Pagination -->
             <div class="pagination">
-            <?php if ($currentPage > 1): ?>
-                <a href="<?= buildPaginationUrl($currentPage - 1) ?>">Previous</a>
-            <?php endif; ?>
+                <?php if ($currentPage > 1): ?>
+                    <a href="<?= buildPaginationUrl($currentPage - 1) ?>">Previous</a>
+                <?php endif; ?>
 
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a href="<?= buildPaginationUrl($i) ?>"
-                   class="<?= ($i === $currentPage) ? 'active' : '' ?>"><?= $i ?></a>
-            <?php endfor; ?>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <a href="<?= buildPaginationUrl($i) ?>"
+                       class="<?= ($i === $currentPage) ? 'active' : '' ?>"><?= $i ?></a>
+                <?php endfor; ?>
 
-            <?php if ($currentPage < $totalPages): ?>
-                <a href="<?= buildPaginationUrl($currentPage + 1) ?>">Next</a>
-            <?php endif; ?>
+                <?php if ($currentPage < $totalPages): ?>
+                    <a href="<?= buildPaginationUrl($currentPage + 1) ?>">Next</a>
+                <?php endif; ?>
+            </div>
         </div>
-    </div>
     </div>
 </div>
 <!-- Recipe Section End -->

@@ -117,13 +117,13 @@ class UserController
             $request = new UserUpdateRequest();
             $request->username = $_POST["username"];
             $request->userId = $user->id;
-            $request->photo = $_FILES['profile'] ?? null;
+            $request->photo = $_FILES['profile']['tmp_name'] != "" ? $_FILES['profile'] : null;
+//            $request->photo = $_FILES['profile'] ?? null;
 //            if (isset($_FILES['profile']) && $_FILES['profile']['error'] == UPLOAD_ERR_OK) {
 //                $request->photo = $_FILES['profile'];
 //            } else {
 //                $request->photo = null;
 //            }
-
             $this->userService->update($request);
             Flasher::setFlash("Akun berhasil diperbarui");
             View::redirect("/user/profile");
