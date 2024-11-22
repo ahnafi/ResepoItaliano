@@ -1388,10 +1388,28 @@ nav .logo span {
     border: none;
 }
 
+.no-recipe {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+
+}
+
+.no-recipe img {
+    max-width: 360px;
+    margin: auto    ;
+}
+
 @media screen and (max-width: 640px) {
     .search-list {
         gap: 8px;
         grid-template-columns: 1fr 1fr;
+    }
+
+    .no-recipe img {
+        max-width: 240px;
     }
 }
 /* Search End */
@@ -1516,7 +1534,7 @@ button[name="delete"]:hover {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 12px;
+    padding: 8px;
     border-radius: 24px;
     border: 3px solid var(--green-base);
     background-color: rgba(22, 163, 74, 0.1);

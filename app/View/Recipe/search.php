@@ -76,6 +76,13 @@ include_once __DIR__ . "/../Components/navbar.php";
             </div>
         </div>
         <div class="search-body">
+                <?php if (count($recipes) === 0): ?>
+                    <div class="no-recipe">
+                        <img src="/images/elements/boat.png" alt="No Recipe"/>
+                        <h2 class="subtitle-font-size">Maaf, resep yang dicari tidak ditemukan.</h2>
+                        <p class="normal-font-size">Mungkin cari resep yang lain bisa banget bun!</p>
+                    </div>
+                <?php endif; ?>
             <div class="search-list">
                 <?php foreach ($recipes as $recipe): ?>
                     <div class="recipe-item">
@@ -89,7 +96,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                         </div>
                         <div class="recipe-item-content">
                             <a href="/recipe/<?= $recipe['recipeId'] ?>">
-                                <h3 class="subtitle-font-size">
+                                <h3 class="scard-title-font-size">
                                     <?= $recipe['name'] ?>
                                 </h3>
                             </a>
