@@ -31,7 +31,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                     <div class="form-group">
                         <label class="normal-font-size" for="name">Judul Resep:</label>
                         <input type="text" id="name" required class="normal-font-size" name="title"
-                               value="<?= $recipe['name'] ?>"/>
+                               value="<?= $recipe['name'] ?>" pattern="[A-Za-z0-9\s]+" maxlength="50"/>
                     </div>
                     <div class="form-group">
                         <label class="normal-font-size" for="category">Kategori:</label>
@@ -50,14 +50,14 @@ include_once __DIR__ . "/../Components/navbar.php";
                                 <div class="ingredient-item">
                                     <span class="ingredient-number"><?= $key + 1 ?></span>
                                     <input class="normal-font-size" type="text" id="ingredients" required
-                                           value="<?= $ingredient ?>"/>
+                                           value="<?= $ingredient ?>" pattern="[A-Za-z0-9\s,./]+" maxlength="200"/>
                                 </div>
                             <?php endforeach; ?>
                         </div>
-                        <button class="normal-font-size" type="button" onclick="addIngredient()">
+                        <button class="normal-font-size add-ingredients" type="button" onclick="addIngredient()">
                             Tambah Bahan
                         </button>
-                        <button class="normal-font-size" type="button" onclick="removeIngredient()">
+                        <button class="normal-font-size delete-ingredients" type="button" onclick="removeIngredient()">
                             Hapus Bahan
                         </button>
                     </div>
@@ -70,31 +70,44 @@ include_once __DIR__ . "/../Components/navbar.php";
                                 <div class="step-item">
                                     <span class="step-number"><?= $key + 1 ?></span>
                                     <input type="text" class="step normal-font-size" id="steps" required
-                                           value="<?= $step ?>"/>
+                                           value="<?= $step ?>" pattern="[A-Za-z0-9\s,./]+" maxlength="200"/>
                                 </div>
                             <?php endforeach; ?>
                         </div>
-                        <button class="normal-font-size" type="button" onclick="addStep()">
+                        <button class="normal-font-size add-steps" type="button" onclick="addStep()">
                             Tambah Langkah
                         </button>
-                        <button class="normal-font-size" type="button" onclick="removeStep()">
+                        <button class="normal-font-size delete-steps" type="button" onclick="removeStep()">
                             Hapus Langkah
                         </button>
                     </div>
                     <div class="form-group">
-                        <label class="normal-font-size" for="note">Catatan:</label>
-                        <textarea id="note" rows="6" name="note"><?= $recipe['note']?></textarea>
+                        <label class="normal-font-size" for="note">Catatan (opsional):</label>
+                        <textarea id="note" rows="6" name="note" class="normal-font-size"><?= $recipe['note']?></textarea>
                     </div>
+<!--                    <div class="form-group">-->
+<!--                        <label class="normal-font-size" for="image">-->
+<!--                            Unggah Gambar:-->
+<!--                        </label>-->
+<!--                        <div class="custom-file-upload">-->
+<!--                            <input type="file" id="image-recipe-upload" name="image" accept=".jpg, .jpeg, .png" required>-->
+<!--                            <span>Pilih Gambar</span>-->
+<!--                        </div>-->
+<!--                        <div id="image-preview-container" class="image-preview-container">-->
+<!--                            <div class="file-preview">-->
+<!--                                <img src="/images/recipes/--><?php //= $recipe['image'] ?><!--" alt="photo recipe" class="image-preview" id="currentImage">-->
+<!--                                <span class="remove-button normal-font-size" id="removeImageButton">×</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="form-group">
                         <label class="normal-font-size" for="image">
-                            Unggah Gambar:
+                            Gambar:
                         </label>
-                        <div class="custom-file-upload">
-                            <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png" required>
-                            <span>Pilih Gambar</span>
-                        </div>
                         <div id="image-preview-container" class="image-preview-container">
-                            <img src="/images/recipes/<?= $recipe['image'] ?>" alt="photo recipe" class="image-preview">
+                            <div class="file-preview">
+                                <img src="/images/recipes/<?= $recipe['image'] ?>" alt="photo recipe" class="image-preview" id="currentImage">
+                            </div>
                         </div>
                     </div>
                     <input type="hidden" name="ingredients" id="valIngredients">

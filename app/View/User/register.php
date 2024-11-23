@@ -22,6 +22,8 @@ include_once __DIR__ . "/../Components/navbar.php";
                     name="username"
                     placeholder="Masukkan username..."
                     class="normal-font-size"
+                    pattern="[A-Za-z0-9\s]+"
+                    maxlength="100"
             />
             <input
                     type="email"

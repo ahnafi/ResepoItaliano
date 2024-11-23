@@ -19,8 +19,8 @@ recipeStepsList.forEach((recipeSteps) => {
 });
 
 
-let ingredientCount = 1; // Untuk menghitung jumlah bahan
-let stepCount = 1; // Untuk menghitung jumlah langkah
+let ingredientCount = document.querySelectorAll(".ingredient-item").length; // Untuk menghitung jumlah bahan
+let stepCount = document.querySelectorAll(".step-item").length; // Untuk menghitung jumlah langkah
 
 // Navigation menu
 document

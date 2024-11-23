@@ -6,7 +6,7 @@ $user = $model['user'] ?? [];
 include_once __DIR__ . "/../Components/navbar.php"
 ?>
 <!-- Aside Start -->
-<div class="profile-settings-container">
+<div class="profile-settings-container password-update-container">
     <div class="profile-settings">
         <!-- Tombol untuk aside -->
         <button id="asideToggle" class="aside-toggle">

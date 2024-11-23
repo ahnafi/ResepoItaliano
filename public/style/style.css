@@ -1072,7 +1072,6 @@ nav .logo span {
 }
 
 .form-group button {
-    background-color: var(--amber-base);
     color: var(--light-base);
     font-weight: 700;
     cursor: pointer;
@@ -1082,12 +1081,21 @@ nav .logo span {
     border: none;
 }
 
+.form-group button.add-ingredients,
+.form-group button.add-steps {
+    background-color: var(--blue-base);
+}
+
+.form-group button.delete-ingredients,
+.form-group button.delete-steps {
+    background-color: var(--red-base);
+}
+
 .add-recipe-form input,
 .add-recipe-form textarea,
 .add-recipe-form select {
     padding: 12px;
     border: none;
-    border-radius: 4px;
     outline: none;
     font-family: "Nunito", sans-serif;
     border-radius: 12px;
@@ -1505,6 +1513,15 @@ button[name="delete"]:hover {
 
 /* Profile Settings End */
 
+/* Password Update Start */
+
+.password-update-container {
+    min-height: 640px !important;
+}
+
+
+/* Password Update End */
+
 /* Manage Recipes Start */
 .manage-recipes-container {
     padding: 128px 8px 96px;
@@ -1526,7 +1543,7 @@ button[name="delete"]:hover {
 
 .manage-recipes-content .manage-recipes-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
     gap: 24px;
 }
 
@@ -1545,6 +1562,7 @@ button[name="delete"]:hover {
     width: 100%;
     border-radius: 12px;
     object-fit: cover;
+    aspect-ratio: 16/9;
 }
 
 .manage-recipe-item .user-recipe {
@@ -1628,6 +1646,13 @@ button[name="delete"]:hover {
     border: none;
 }
 
+@media screen and (max-width: 640px) {
+    .manage-recipes-content .manage-recipes-list {
+        gap: 8px;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 /* Manage Recipes End */
 
 /* Saved Recipes Start */
@@ -1651,7 +1676,7 @@ button[name="delete"]:hover {
 
 .saved-recipes-content .saved-recipes-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
     gap: 24px;
 }
 
@@ -1716,10 +1741,10 @@ button[name="delete"]:hover {
     border: none;
 }
 
-.recipe-action button svg {
+.saved-recipes-list .saved-recipe-item .recipe-action button svg {
     width: 40px;
     height: 40px;
-    background-color: var(--blue-base);
+    background-color: var(--amber-base);
     color: var(--light-base);
     font-weight: 700;
     cursor: pointer;
@@ -1729,6 +1754,13 @@ button[name="delete"]:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media screen and (max-width: 640px) {
+    .saved-recipes-content .saved-recipes-list {
+        gap: 8px;
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 /* Saved Recipes End */
