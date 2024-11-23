@@ -1,4 +1,14 @@
 <?php
+$category = [
+    'Pizza',
+    'Pasta',
+    'Risotto',
+    'Gelato',
+    'Tiramisu',
+    'Burrata',
+    'Bruschetta'
+];
+
 $recipes = $model['recipes'] ?? [];
 $total = $model['total'] ?? 0;
 
@@ -17,6 +27,16 @@ function buildPaginationUrl($page)
     $queryParams['page'] = $page; // Tambahkan parameter 'page' baru
     $newQuery = http_build_query($queryParams); // Bangun kembali query string
     return $parsedUrl['path'] . ($newQuery ? '?' . $newQuery : ''); // Gabungkan kembali
+}
+
+function buildUserId($userId)
+{
+    $parsedUrl = parse_url($_SERVER["REQUEST_URI"]);
+    parse_str($parsedUrl['query'] ?? '', $queryParams);
+    unset($queryParams['userId']);
+    $queryParams['userId'] = $userId;
+    $newQuery = http_build_query($queryParams);
+    return $parsedUrl['path'] . ($newQuery ? '?' . $newQuery : '');
 }
 
 ?>
@@ -48,6 +68,19 @@ include_once __DIR__ . "/../Components/navbar.php";
         <!-- Recipe Section Start -->
         <div class="manage-recipes-content">
             <h2 class="title-font-size"><?= count($recipes) > 0 ? "Kelola Semua Resep" : "Belum ada resep" ?></h2>
+            <div class="search-form">
+                <form method="get" action="">
+                    <select name="cat" class="normal-font-size">
+                        <option selected value="">Pilih Kategori</option>
+                        <?php foreach ($category as $key => $item): ?>
+                            <option value="<?= $key + 1 ?>"><?= $item ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <input name="title" type="search" placeholder="Search Recipe" aria-label="Search"
+                           class="normal-font-size">
+                    <button type="submit" class="normal-font-size">Search</button>
+                </form>
+            </div>
             <div class="manage-recipes-list">
                 <table border="1">
                     <thead>
@@ -71,8 +104,11 @@ include_once __DIR__ . "/../Components/navbar.php";
                             <td>
                                 <?= $recipe['category']->category_name ?>
                             </td>
-                            <td><?= $recipe['user']->username ?></td>
-                            <td><?= $recipe['user']->email ?></td>
+                            <td>
+                                <a href="<?= buildUserId($recipe['user']->id); ?>"><?= $recipe['user']->username ?></a>
+                            </td>
+                            <td><a href="<?= buildUserId($recipe['user']->id); ?>"><?= $recipe['user']->email ?></a>
+                            </td>
                             <td><?= timeAgo($recipe['createdAt']) ?></td>
                             <td>
                                 <a href="/recipe/update/<?= $recipe['recipeId'] ?>">edit</a>

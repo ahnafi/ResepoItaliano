@@ -48,6 +48,20 @@ include_once __DIR__ . "/../Components/navbar.php";
         <!-- Recipe Section Start -->
         <div class="manage-recipes-content">
             <h2 class="title-font-size"><?= count($users) > 0 ? "Kelola Semua User" : "Belum ada User" ?></h2>
+            <div class="search-form">
+                <form method="get" action="">
+                    <select name="role" class="normal-font-size">
+                        <option selected value="">Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                    <input name="username" type="search" placeholder="Search Username" aria-label="Search"
+                           class="normal-font-size">
+                    <input name="email" type="search" placeholder="Search Email" aria-label="Search"
+                           class="normal-font-size">
+                    <button type="submit" class="normal-font-size">Search</button>
+                </form>
+            </div>
             <div class="manage-recipes-list">
                 <table border="1">
                     <thead>

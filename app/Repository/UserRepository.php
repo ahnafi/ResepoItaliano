@@ -68,7 +68,6 @@ class UserRepository
 
         // Query untuk menghitung total data sesuai filter (tanpa LIMIT dan OFFSET)
         $countQuery = "SELECT COUNT(*) AS total FROM users WHERE 1=1";
-
         $queryParams = [];
 
         if ($params->username != null) {
@@ -95,7 +94,9 @@ class UserRepository
         $countStatement->execute();
         $total = $countStatement->fetchColumn();
 
+        // Query untuk mengambil data pengguna
         $query = "SELECT users.* FROM users WHERE 1=1";
+        $queryParams = []; // Reset queryParams untuk kueri pengguna
 
         if ($params->username != null) {
             $query .= " AND users.username LIKE ?";
@@ -115,17 +116,18 @@ class UserRepository
         $query .= " LIMIT ? OFFSET ?";
         $statement = $this->connection->prepare($query);
 
+        // Mengikat parameter untuk kueri pengguna
         foreach ($queryParams as $index => $param) {
             $statement->bindValue($index + 1, $param);
         }
 
+        // Mengikat LIMIT dan OFFSET
         $statement->bindValue(count($queryParams) + 1, $limit, \PDO::PARAM_INT);
         $statement->bindValue(count($queryParams) + 2, $offset, \PDO::PARAM_INT);
 
         $statement->execute();
 
         $users = [];
-
         while ($row = $statement->fetch()) {
             $user = new User();
             $user->id = $row['user_id'];
