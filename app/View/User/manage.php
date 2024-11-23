@@ -61,7 +61,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                         </div>
                         <div class="recipe-item-content">
                             <a href="/recipe/<?= $recipe['recipeId'] ?>">
-                                <h3 class="subtitle-font-size"><?= $recipe['name'] ?></h3>
+                                <h3 class="card-title-font-size"><?= $recipe['name'] ?></h3>
                             </a>
                             <p>
                                 <?php
