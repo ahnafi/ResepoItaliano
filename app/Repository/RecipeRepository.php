@@ -174,6 +174,7 @@ class RecipeRepository
             $recipe->createdAt = $row['created_at'];
             $recipe->user = new User();
             $recipe->user->id = $row['user_id'];
+            $recipe->user->email = $row['email'];
             $recipe->user->username = $row['username'];
             $recipe->user->profileImage = $row['profile_image'];
             $recipe->category = new Category();

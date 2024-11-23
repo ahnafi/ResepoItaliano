@@ -9,4 +9,5 @@ class User
     public string $email;
     public string $password;
     public ?string $profileImage = null;
+    public ?string $role = "user";
 }

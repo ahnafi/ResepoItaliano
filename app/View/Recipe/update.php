@@ -94,7 +94,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                             <span>Pilih Gambar</span>
                         </div>
                         <div id="image-preview-container" class="image-preview-container">
-                            <img src="/images/recipes/<?= $recipe['image'] ?>" alt="photo recipe" class="image-preview">
+                            <img src="/images/recipes/<?= $recipe['image'] ?>" alt="photo recipe" class="image-preview" style="max-width: 5em;">
                         </div>
                     </div>
                     <input type="hidden" name="ingredients" id="valIngredients">

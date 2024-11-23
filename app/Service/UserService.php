@@ -5,11 +5,13 @@ namespace Service;
 use Config\Database;
 use Domain\User;
 use Exception\ValidationException;
+use Model\SearchUserResponse;
 use Model\UserLoginRequest;
 use Model\UserLoginResponse;
 use Model\UserPasswordRequest;
 use Model\UserRegisterRequest;
 use Model\UserRegisterResponse;
+use Model\UserSearchParams;
 use Model\UserUpdateRequest;
 use Model\UserUpdateResponse;
 use Repository\UserRepository;
@@ -45,6 +47,7 @@ class UserService
             $user = new User();
             $user->username = $request->username;
             $user->email = $request->email;
+            $user->role = $request->role;
             $user->password = password_hash($request->password, PASSWORD_BCRYPT);
             $result = $this->userRepository->save($user);
 
@@ -210,6 +213,15 @@ class UserService
         if ($request->password != $request->password_confirmation) {
             throw new ValidationException("Passwords do not match");
         }
+    }
+
+    public function getAllUsers(UserSearchParams $request): SearchUserResponse
+    {
+        $users = $this->userRepository->search($request);
+        $result = new SearchUserResponse();
+        $result->users = $users->users;
+        $result->total = $users->total;
+        return $result;
     }
 
 }

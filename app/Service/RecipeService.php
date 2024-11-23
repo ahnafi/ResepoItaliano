@@ -99,7 +99,7 @@ class RecipeService
 
     private function ValidateCreateRecipeRequest(CreateRecipeRequest $request): void
     {
-        if ($request->userId == null or $request->userId == "" || $request->name == null or $request->name == "" || $request->ingredients == null or $request->ingredients == "" || $request->steps == null or $request->steps == "" || $request->note == null or $request->note == "" || $request->categoryId == null or $request->categoryId == "") {
+        if ($request->userId == null or $request->userId == "" || $request->name == null or $request->name == "" || $request->ingredients == null or $request->ingredients == "" || $request->steps == null or $request->steps == "" || $request->categoryId == null or $request->categoryId == "") {
             throw new ValidationException ("title , ingredients ,steps ,category cannot be empty");
         }
 
@@ -177,20 +177,20 @@ class RecipeService
             Database::beginTransaction();
 
             $user = $this->userRepository->findByField("user_id", $request->userId);
-
             if ($user == null) {
-                throw new ValidationException("user not found");
+                throw new ValidationException("User  not found");
             }
 
             $recipe = $this->recipeRepository->find($request->recipeId);
             if ($recipe == null) {
-                throw new ValidationException("recipe not found");
+                throw new ValidationException("Recipe not found");
             }
 
-            if ($user->id != $recipe->user->id) {
-                throw new ValidationException("user cannot edit recipe");
+            if ($user->role != 'admin' && $user->id != $recipe->user->id) {
+                throw new ValidationException("User  cannot edit recipe");
             }
 
+            // Memperbarui resep yang ada
             $newRecipe = new Recipe();
             $newRecipe->recipeId = $recipe->recipeId;
             $newRecipe->name = $request->name;
@@ -199,19 +199,30 @@ class RecipeService
             $newRecipe->note = $request->note;
             $newRecipe->categoryId = $request->categoryId;
 
-            if ($recipe->image != null && $request->image['tmp_name'] != "") {
-                unlink($this->uploadDir . $recipe->image);
+            // Hapus gambar lama jika ada dan gambar baru diunggah
+            if ($recipe->image != null) {
+                if ($request->image && isset($request->image["tmp_name"]) && $request->image["tmp_name"] !== "") {
+                    unlink($this->uploadDir . $recipe->image);
+                } else {
+                    // Jika tidak ada gambar baru, tetap gunakan gambar lama
+                    $newRecipe->image = $recipe->image;
+                }
             }
 
-            if ($request->image && isset($request->image["tmp_name"])) {
+            // Proses pengunggahan gambar baru jika ada
+            if ($request->image && isset($request->image["tmp_name"]) && $request->image["error"] === UPLOAD_ERR_OK) {
                 $extension = pathinfo($request->image["name"], PATHINFO_EXTENSION);
                 $imageName = uniqid() . "." . $extension;
 
-                move_uploaded_file($request->image["tmp_name"], $this->uploadDir . $imageName);
+                // Pindahkan file yang diunggah ke direktori yang ditentukan
+                if (!move_uploaded_file($request->image["tmp_name"], $this->uploadDir . $imageName)) {
+                    throw new \Exception("Failed to move uploaded file.");
+                }
 
                 $newRecipe->image = $imageName;
             }
 
+            // Perbarui resep di repositori
             $this->recipeRepository->update($newRecipe);
 
             Database::commitTransaction();
@@ -245,7 +256,7 @@ class RecipeService
                 throw new ValidationException("recipe not found");
             }
 
-            if ($user->id != $recipe->user->id) {
+            if ($user->role != 'admin' && $user->id != $recipe->user->id) {
                 throw new ValidationException("user cannot delete recipe");
             }
 

@@ -5,11 +5,14 @@ USE resepo_italiano;
 CREATE TABLE users
 (
     user_id       int auto_increment PRIMARY KEY,
-    username      varchar(100)        not null,
-    email         varchar(250) unique not null,
-    password      varchar(250)        not null,
-    profile_image varchar(250)        null
+    username      varchar(100)                          not null,
+    email         varchar(250) unique                   not null,
+    password      varchar(250)                          not null,
+    profile_image varchar(250)                          null,
+    role          ENUM ('admin', 'user') DEFAULT 'user' NOT NULL
 );
+# password italianoresepo
+INSERT INTO users (username,email,password,role) VALUES ('admin','admin@resepoitaliano.com','$2y$10$Ux9LcN0mMkthRSycxwWI9uuuM2D/TZFHLOs19.cJwzOGXmJnnpwBm','ADMIN');
 
 CREATE TABLE sessions
 (

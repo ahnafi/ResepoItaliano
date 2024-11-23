@@ -36,6 +36,8 @@ class SavedRecipeService
                 throw new ValidationException("user not found");
             }
 
+            if ($user->role == 'admin') throw new ValidationException("Admin tidak bisa meyimpan resep");
+
             $recipe = $this->recipeRepository->find($request->recipeId);
 
             // validasi apakah sudah ada saved recipes yang sudah disimpan

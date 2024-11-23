@@ -254,7 +254,7 @@ include_once __DIR__ . "/../Components/navbar.php";
             </div>
         </div>
         <div class="contact-us-form">
-            <form action="/contact" method="POST">
+            <form action="/about/contact" method="POST">
                 <div class="form-group">
                     <label for="name">Nama</label>
                     <input class="normal-font-size" type="text" id="name" name="name" required />

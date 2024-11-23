@@ -111,7 +111,7 @@ class UserController
     public function postUpdate(): void
     {
         $user = $this->sessionService->current();
-
+        $redirect = $user->role == 'user' ? '/user/profile' : '/admin/profile';
         try {
 
             $request = new UserUpdateRequest();
@@ -126,17 +126,17 @@ class UserController
 //            }
             $this->userService->update($request);
             Flasher::setFlash("Akun berhasil diperbarui");
-            View::redirect("/user/profile");
+            View::redirect($redirect);
         } catch (ValidationException $e) {
             Flasher::setFlash("update failed : " . $e->getMessage());
-            View::redirect("/user/profile");
+            View::redirect($redirect);
         }
     }
 
     public function postPassword(): void
     {
         $user = $this->sessionService->current();
-
+        $redirect = $user->role == 'user' ? '/user/profile' : '/admin/profile';
         try {
             $request = new UserPasswordRequest();
             $request->password = $_POST["newPassword"];
@@ -147,10 +147,10 @@ class UserController
             $this->userService->updatePassword($request);
 
             Flasher::setFlash("Password berhasil diperbarui");
-            View::redirect("/user/profile/password");
+            View::redirect("$redirect/password");
         } catch (ValidationException $e) {
             Flasher::setFlash("update password failed : " . $e->getMessage());
-            View::redirect("/user/profile/password");
+            View::redirect("$redirect/password");
         }
     }
 

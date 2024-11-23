@@ -24,7 +24,8 @@
                 </li>
                 <?php if (isset($model['user'])) : ?>
                     <li class="navigation-link">
-                        <a href="/user/profile" class="profile-photo">
+                        <a href="/<?= $model['user']['role'] == 'user' ? 'user' : 'admin' ?>/profile"
+                           class="profile-photo">
                             <img src="/images/profiles/<?= $model['user']['profileImage'] ?? "default.jpg" ?>"
                                  alt="Profile photo"/>
                             <span><?= $model['user']['username'] ?></span>

@@ -235,10 +235,8 @@ class HomeController
     public function postUpdateRecipe($recipeId): void
     {
         $user = $this->sessionService->current();
-
+        $redirect = $user->role == 'user' ? '/user/profile' : '/admin/profile';
         try {
-            var_dump($_POST);
-            var_dump($_FILES);
             $req = new UpdateRecipeRequest();
             $req->recipeId = (int)$recipeId;
             $req->name = htmlspecialchars($_POST['title']);
@@ -248,11 +246,17 @@ class HomeController
             $req->ingredients = htmlspecialchars($_POST['ingredients']);
             $req->userId = $user->id;
 
-            $req->image = $_FILES['image'] ?? null;
+            // Memeriksa apakah file gambar diunggah dengan benar
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK && $_FILES['image']['size'] > 0) {
+                $req->image = $_FILES['image'];
+            } else {
+                $req->image = null; // Jika tidak ada file yang diunggah, set ke null
+            }
 
+            var_dump($req);
             $this->recipeService->updateRecipe($req);
             Flasher::setFlash("Resep berhasil diperbarui");
-            View::redirect("/recipe/update/" . $recipeId);
+            View::redirect($redirect . "/manage-recipes");
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
             View::redirect("/");
@@ -262,7 +266,7 @@ class HomeController
     public function postRemoveRecipe(): void
     {
         $user = $this->sessionService->current();
-
+        $redirect = $user->role == 'user' ? '/user/profile' : '/admin/profile';
         try {
             $req = new DeleteRecipeRequest();
             $req->recipeId = (int)htmlspecialchars($_POST['recipeId']);
@@ -270,10 +274,10 @@ class HomeController
             $this->recipeService->deleteRecipe($req);
 
             Flasher::setFlash("Resep berhasil dihapus");
-            View::redirect("/user/profile/manage-recipes");
+            View::redirect("$redirect/manage-recipes");
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
-            View::redirect("/user/profile/manage-recipes");
+            View::redirect("$redirect/manage-recipes");
         }
     }
 
@@ -293,7 +297,7 @@ class HomeController
             View::redirect("/recipe/$recipeId");
         } catch (ValidationException $exception) {
             Flasher::setFlash("Error : " . $exception->getMessage());
-            View::redirect("/");
+            View::redirect("/recipe/$recipeId");
         }
     }
 
@@ -313,6 +317,24 @@ class HomeController
             Flasher::setFlash("Error : " . $exception->getMessage());
             View::redirect("/");
         }
+    }
+
+    public function postEmail()
+    {
+        $toEmail = "admin@pedulirasa.co.id";
+        $subject = "Hubungi Admin";
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $note = $_POST['message'];
+
+        $message = "\nNama : $name \nEmail : $email \n\n$note";
+
+        if (mail($toEmail, $subject, $message)) {
+            Flasher::setFlash("Email berhasil dikirim");
+        } else {
+            Flasher::setFlash("Email gagal dikirim");
+        }
+        View::redirect("/about");
     }
 
 }
