@@ -49,7 +49,7 @@ class AdminController
         $user = $this->sessionService->current();
 
         $model = [
-            'title' => 'Hello admin',
+            'title' => 'Pengaturan Akun',
             'user' => (array)$user,
         ];
 
@@ -117,7 +117,7 @@ class AdminController
         $user = $this->sessionService->current();
 
         $model = [
-            'title' => 'Register new Admin',
+            'title' => 'Tambahkan Admin Baru',
             'user' => (array)$user,
         ];
 

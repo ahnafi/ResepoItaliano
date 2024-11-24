@@ -21,7 +21,7 @@ include_once __DIR__ . "/../Components/navbar.php";
     <div class="add-recipe">
         <div class="add-recipe-content">
             <div class="add-recipe-head">
-                <h1 class="title-font-size">Tambah Resep</h1>
+                <h1 class="title-font-size">Tambahkan Resep</h1>
             </div>
             <div class="add-recipe-form">
                 <form id="recipeForm" method="post" action="/recipe/add" enctype="multipart/form-data">

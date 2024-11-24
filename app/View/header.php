@@ -14,6 +14,7 @@ include_once __DIR__ . "/Components/utils.php";
           rel="stylesheet"/>
     <link rel="stylesheet" href="/style/style.css"/>
     <link rel="stylesheet" href="/style/core.css"/>
+    <link rel="stylesheet" href="/style/admin.css"/>
 </head>
 <body class="normal-font-size">
 <?php

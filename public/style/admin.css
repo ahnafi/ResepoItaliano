@@ -1,0 +1,168 @@
+.admin-manage-recipes-container {
+    padding: 128px 8px 96px;
+}
+
+.admin-manage-recipes {
+    max-width: 1024px;
+    margin: auto;
+    display: flex;
+    gap: 24px;
+}
+
+.admin-manage-recipes-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.admin-manage-recipes-container .admin-manage-recipes .admin-manage-recipes-content .search-form form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.search-form select,
+.search-form input,
+.search-form button {
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+}
+
+.search-form button {
+    background-color: var(--blue-base);
+    color: var(--light-base);
+    border: none;
+    cursor: pointer;
+}
+
+/* Tabel */
+.admin-manage-recipes-list table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.admin-manage-recipes-list th,
+.admin-manage-recipes-list td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.admin-manage-recipes-list th {
+    background-color: #f1f1f1;
+}
+
+.admin-manage-recipes-list tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Tautan dalam tabel */
+.admin-manage-recipes-list .action {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+}
+
+.admin-manage-recipes-list a.update-recipe {
+    color: var(--light-base);
+    background-color: var(--blue-base);
+    padding: 2px 4px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+.admin-manage-recipes-list input.delete-recipe {
+    color: var(--light-base);
+    background-color: var(--red-base);
+    padding: 2px 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+
+/* Manage Users Start */
+.admin-manage-users-container {
+    padding: 128px 8px 96px;
+}
+
+.admin-manage-users {
+    max-width: 1024px;
+    margin: auto;
+    display: flex;
+    gap: 24px;
+}
+
+.admin-manage-users-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.admin-manage-users-container .admin-manage-users .admin-manage-users-content .search-form form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.search-form select,
+.search-form input,
+.search-form button {
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+}
+
+.search-form button {
+    background-color: var(--blue-base);
+    color: var(--light-base);
+    border: none;
+    cursor: pointer;
+}
+
+/* Tabel */
+.admin-manage-users-list table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.admin-manage-users-list th,
+.admin-manage-users-list td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.admin-manage-users-list th {
+    background-color: #f1f1f1;
+}
+
+.admin-manage-users-list tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Tautan dalam tabel */
+.admin-manage-users-list .profile-photos {
+    width: 48px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.admin-manage-users-list a.update-recipe {
+    color: var(--light-base);
+    background-color: var(--blue-base);
+    padding: 2px 4px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+/* Manage Users End */

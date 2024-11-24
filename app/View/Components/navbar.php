@@ -17,7 +17,7 @@
                     <a href="/about">Tentang Kami</a>
                 </li>
                 <li class="navigation-link">
-                    <a href="/recipe/add">Posting Resep</a>
+                    <a href="/recipe/add">Tambah Resep</a>
                 </li>
                 <li class="navigation-link">
                     <a href="/search">Cari Resep</a>
