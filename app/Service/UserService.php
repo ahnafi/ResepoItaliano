@@ -5,6 +5,7 @@ namespace Service;
 use Config\Database;
 use Domain\User;
 use Exception\ValidationException;
+use Model\AdminUpdateUserRequest;
 use Model\SearchUserResponse;
 use Model\UserLoginRequest;
 use Model\UserLoginResponse;
@@ -224,4 +225,88 @@ class UserService
         return $result;
     }
 
+    public function adminUpdateUser(AdminUpdateUserRequest $request): void
+    {
+        $this->validateAdminUpdateRequest($request);
+        $pathFile = __DIR__ . "/../../public/images/profiles/";
+
+        try {
+            Database::beginTransaction();
+
+            if ($this->userRepository->findByField("user_id", $request->adminId)->role != 'admin') throw new ValidationException("Cannot modify users need admin role");
+
+            $user = $this->userRepository->findByField("user_id", $request->userId);
+            if ($user == null) {
+                throw new ValidationException("User not found");
+            }
+
+            if ($user->profileImage != null && $request->profileImage != null) {
+                unlink($pathFile . $user->profileImage);
+            }
+
+            if ($request->profileImage && isset($request->profileImage["tmp_name"])) {
+                $extension = pathinfo($request->profileImage["name"], PATHINFO_EXTENSION);
+                $photoName = uniqid() . "." . $extension;
+
+                move_uploaded_file($request->profileImage["tmp_name"], $pathFile . $photoName);
+
+                $user->profileImage = $photoName;
+            }
+
+            $user->username = $request->username;
+            if (!empty($request->password)) {
+                $user->password = password_hash($request->password, PASSWORD_BCRYPT);
+            }
+
+            $this->userRepository->update($user);
+
+            Database::commitTransaction();
+        } catch (\Exception $exception) {
+            Database::rollbackTransaction();
+            throw $exception;
+        }
+    }
+
+    private function validateAdminUpdateRequest(AdminUpdateUserRequest $request): void
+    {
+        if ($request->adminId == null or empty($request->adminId) or $request->adminId == "" or $request->userId == null or empty($request->userId) or $request->userId == "") {
+            throw new ValidationException("You must admin");
+        }
+
+        if ($request->password == null and $request->username == null and $request->profileImage == null) {
+            throw new ValidationException("Password, username and profile image is required");
+        }
+
+        if (isset($request->profileImage)) {
+            if ($request->profileImage == null && $request->profileImage["tmp_name"] == "") {
+                throw new ValidationException ("image cannot be empty");
+            }
+
+            if ($request->profileImage["error"] != UPLOAD_ERR_OK) {
+                throw new ValidationException ("image error");
+            }
+
+            if (!in_array($request->profileImage["type"], ['image/jpeg', 'image/png', 'image/jpg'])) {
+                throw new ValidationException ("image type is not allowed");
+            }
+
+            if ($request->profileImage["size"] > 2 * 1024 * 1024) {
+                throw new ValidationException ("image size is too large");
+            }
+        }
+    }
+
+    public function find(int $userId): ?User
+    {
+        if ($userId == null or $userId == "" or empty($userId)) {
+            throw new ValidationException("User not found");
+        }
+
+        $result = $this->userRepository->findByField("user_id", $userId);
+        if ($result == null) {
+            throw new ValidationException("User not found");
+        }
+
+        return $result;
+    }
 }

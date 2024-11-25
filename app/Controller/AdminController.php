@@ -4,9 +4,11 @@ namespace Controller;
 
 use Config\Database;
 use Exception\ValidationException;
+use Model\AdminUpdateUserRequest;
 use Model\RecipeSearchParams;
 use Model\UserRegisterRequest;
 use Model\UserSearchParams;
+use Model\UserUpdateRequest;
 use Repository\CategoryRepository;
 use Repository\RecipeRepository;
 use Repository\SavedRecipeRepository;
@@ -24,7 +26,6 @@ class AdminController
     private UserService $userService;
     private SessionService $sessionService;
     private RecipeService $recipeService;
-    private SavedRecipeService $savedRecipeService;
 
     public function __construct()
     {
@@ -37,8 +38,6 @@ class AdminController
         $this->sessionService = new SessionService($sessionRepository, $userRepository);
 
         $recipeRepository = new RecipeRepository($connection);
-        $savedRecipeRepository = new SavedRecipeRepository($connection);
-        $this->savedRecipeService = new SavedRecipeService($savedRecipeRepository, $userRepository, $recipeRepository);
 
         $categoryRepository = new CategoryRepository($connection);
         $this->recipeService = new RecipeService($recipeRepository, $categoryRepository, $userRepository);
@@ -141,6 +140,48 @@ class AdminController
         } catch (ValidationException $e) {
             Flasher::setFlash("register failed : " . $e->getMessage());
             View::redirect("/admin/profile/register-admin");
+        }
+    }
+
+    public function updateUser(int $userId)
+    {
+        $user = $this->sessionService->current();
+
+        try {
+            $updateUser = $this->userService->find($userId);
+            $model = [
+                'title' => 'Ubah Profil User',
+                'user' => (array)$user,
+                'updateUser' => (array)$updateUser
+            ];
+
+            View::render('Admin/updateUser', $model);
+        } catch (ValidationException $exception) {
+            Flasher::setFlash('error : ' . $exception->getMessage());
+            View::redirect("/admin/profile/manage-users");
+        }
+
+    }
+
+    public function postUpdateUser($userId): void
+    {
+        $user = $this->sessionService->current();
+
+        try {
+
+            $request = new AdminUpdateUserRequest();
+            $request->userId = (int)$userId;
+            $request->adminId = $user->id;
+            $request->username = $_POST["username"] ?? null;
+            $request->password = $_POST["newPassword"] ?? null;
+            $request->profileImage = $_FILES['profile']['tmp_name'] != "" ? $_FILES['profile'] : null;
+            $this->userService->adminUpdateUser($request);
+
+            Flasher::setFlash("Update data user berhasil");
+            View::redirect("/admin/profile/manage-users");
+        } catch (ValidationException $e) {
+            Flasher::setFlash("Update user failed : " . $e->getMessage());
+            View::redirect("/admin/profile/manage-users");
         }
     }
 }

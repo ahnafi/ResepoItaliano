@@ -12,7 +12,7 @@ CREATE TABLE users
     role          ENUM ('admin', 'user') DEFAULT 'user' NOT NULL
 );
 # password italianoresepo
-INSERT INTO users (username,email,password,role) VALUES ('admin','admin@resepoitaliano.com','$2y$10$Ux9LcN0mMkthRSycxwWI9uuuM2D/TZFHLOs19.cJwzOGXmJnnpwBm','ADMIN');
+INSERT INTO users (username,email,password,role) VALUES ('admin','admin@resepoitaliano.com','$2y$10$Ux9LcN0mMkthRSycxwWI9uuuM2D/TZFHLOs19.cJwzOGXmJnnpwBm','admin');
 
 CREATE TABLE sessions
 (

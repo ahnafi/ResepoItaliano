@@ -1,5 +1,5 @@
 <?php
-$user = $model['user'] ?? [];
+$updateUser = $model['updateUser'] ?? [];
 ?>
 
 <?php
@@ -21,11 +21,13 @@ include_once __DIR__ . "/../Components/navbar.php"
         <!-- Aside End -->
         <!-- Profile Settings Start -->
         <div class="profile-settings-content">
-            <h1 class="big-normal-font-size">Perbarui Akun Nama Akun</h1>
+            <h1 class="big-normal-font-size">Perbarui Akun <?= $updateUser['username'] ?></h1>
             <div class="profile-settings-form">
-                <form action="/user/profile" method="post" enctype="multipart/form-data">
+                <form action="/admin/profile/manage-users/update/<?= $updateUser['id'] ?>" method="post"
+                      enctype="multipart/form-data">
                     <div id="profileSettingsPhoto" class="form-group profile-settings-photo">
-                        <img src="/images/profiles/<?= $user["profileImage"] ?? "default.jpg" ?>" alt="Profile photo"
+                        <img src="/images/profiles/<?= $updateUser["profileImage"] ?? "default.jpg" ?>"
+                             alt="Profile photo"
                              class="profile-photo"
                              id="profilePreview"/>
                         <div class="profile-image-upload">
@@ -39,25 +41,22 @@ include_once __DIR__ . "/../Components/navbar.php"
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" name="username" id="name" placeholder="Nama..." required
-                               value="<?= $user["username"] ?>"/>
+                               value="<?= $updateUser["username"] ?>"/>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" placeholder="Email..." readonly
-                               value="<?= $user["email"] ?>"/>
+                               value="<?= $updateUser["email"] ?>"/>
                     </div>
                     <div class="form-group">
-                        <label for="old-password">Password Lama</label>
-                        <input type="password" name="old-password" id="old-password" placeholder="Password lama..." value="<?= $user["email"] ?>"/>
+                        <label for="newPassword">Password Baru (opsional)</label>
+                        <input type="password" name="newPassword" id="newPassword"
+                               placeholder="Buat Password baru ..."/>
                     </div>
                     <div class="form-group">
-                        <label for="new-password">Email</label>
-                        <input type="password" name="new-password" id="new-password" placeholder="Password baru..."
-                               value="<?= $user["email"] ?>"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="verify-new-password">Email</label>
-                        <input type="password" name="verify-new-password" id="verify-new-password" placeholder="Verifikasi password baru..." value="<?= $user["email"] ?>"/>
+                        <label for="verifyPassword">Verifikasi Password baru</label>
+                        <input type="password" name="" id="verifyPassword"
+                               placeholder="Verifikasi password ..."/>
                     </div>
                     <button type="submit" class="save-button">
                         Simpan Perubahan
@@ -82,4 +81,21 @@ include_once __DIR__ . "/../Components/navbar.php"
             ? "translateX(0)"
             : "translateX(16rem)";
     });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector(".profile-settings-form form");
+        const newPasswordInput = document.getElementById("newPassword");
+        const verifyPasswordInput = document.getElementById("verifyPassword");
+
+        form.addEventListener("submit", (event) => {
+            const newPassword = newPasswordInput.value;
+            const verifyPassword = verifyPasswordInput.value;
+
+            if (newPassword !== verifyPassword) {
+                event.preventDefault(); // Mencegah form dikirim
+                alert("Password baru dan verifikasi password tidak cocok.");
+            }
+        });
+    });
+
 </script>

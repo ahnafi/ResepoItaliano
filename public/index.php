@@ -54,8 +54,10 @@ Router::add("GET", "/admin/profile", AdminController::class, "profile", [MustLog
 Router::add("GET", "/admin/profile/password", AdminController::class, "password", [MustLoginMiddleware::class, MustAdminMiddleware::class]);
 Router::add("GET", "/admin/profile/manage-recipes", AdminController::class, "manageRecipes", [MustLoginMiddleware::class, MustAdminMiddleware::class]);
 Router::add("GET", "/admin/profile/manage-users", AdminController::class, "manageUsers", [MustLoginMiddleware::class, MustAdminMiddleware::class]);
+Router::add("GET", "/admin/profile/manage-users/update/([0-9]*)", AdminController::class, "updateUser", [MustLoginMiddleware::class, MustAdminMiddleware::class]);
 Router::add("GET", "/admin/profile/register-admin", AdminController::class, "registerAdmin", [MustLoginMiddleware::class, MustAdminMiddleware::class]);
 
+Router::add("POST", "/admin/profile/manage-users/update/([0-9]*)", AdminController::class, "postUpdateUser", [MustLoginMiddleware::class, MustAdminMiddleware::class]);
 Router::add("POST", "/admin/profile/register-admin", AdminController::class, "postRegisterAdmin", [MustLoginMiddleware::class, MustAdminMiddleware::class]);
 
 Router::add("GET", "/error", HomeController::class, "error");

@@ -80,12 +80,12 @@ include_once __DIR__ . "/../Components/navbar.php";
                                 <?= $user['username'] ?>
                             </td>
                             <td><?= $user['email'] ?></td>
-                            <td><?= $user['role'] ?></td>
+                            <td><?= $user['role'] == 'admin' ? 'Admin' : 'Pengguna' ?></td>
                             <td><img src="/images/profiles/<?= $user['profileImage'] ?? "default.jpg" ?>"
                                      alt="Foto profil <?= $user['username'] ?>" class="profile-photos">
                             </td>
                             <td class="action">
-                                <a href="/recipe/update/<?= $user['id'] ?>" class="update-recipe">Ubah</a>
+                                <a href="/admin/profile/manage-users/update/<?= $user['id'] ?>" class="update-recipe">Ubah</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
