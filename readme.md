@@ -49,7 +49,7 @@ ResepoItaliano/
 1. Clone repository ini.
 2. Pindahkan folder project ke dalam folder `www` pada Laragon.
 3. Buka Laragon dan jalankan Apache dan MySQL.
-4. Buka browser dan ketikkan `localhost/ResepoItaliano`. jika cara ini tidak berhasil, buka Code Editor kalian lalu buka terminal. Setelah itu, pindah direktorinya ke public dengan menjalankan perintah `cd public`, lalu jalankan perintah `php -S localhost:3000`.
+4. Buka browser dan ketikkan `localhost/ResepoItaliano`. Jika cara ini tidak berhasil, buka Code Editor kalian lalu buka terminal. Setelah itu, pindah direktorinya ke public dengan menjalankan perintah `cd public`, lalu jalankan perintah `php -S localhost:3000`.
 5. Selesai.
 
 ## Kontributor 👷‍♂️
