@@ -167,13 +167,13 @@ include_once __DIR__ . "/../Components/navbar.php";
             <div class="testimonial">
                 <div class="testimonial-profile">
                     <img
-                            src="/images/profiles/nadia-putri.png"
+                            src="/images/profiles/sulthon.jpg"
                             alt="Profile photo"
                     />
                     <div class="">
-                        <p class="testimonial-name">Nadia Putri</p>
+                        <p class="testimonial-name">Atik Ahnafi Sulthon</p>
                         <p class="testimonial-profession small-font-size">
-                            Ibu rumah tangga
+                            Mahasiswa
                         </p>
                     </div>
                 </div>
