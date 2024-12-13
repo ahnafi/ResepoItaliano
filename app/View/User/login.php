@@ -30,7 +30,7 @@ include_once __DIR__ . "/../Components/navbar.php";
                     placeholder="Masukkan password..."
                     class="normal-font-size"
             />
-            <input type="submit" value="Daftar" class="normal-font-size"/>
+            <input type="submit" value="Masuk" class="normal-font-size"/>
         </form>
     </div>
 </div>
