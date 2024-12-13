@@ -45,6 +45,10 @@ ResepoItaliano/
 │   README.md           # README digunakan untuk mengatur deskripsi aplikasi
 ```
 
+## Demo Aplikasi
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GkqchF9lrTc?si=biMbi65buxcwN3mg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Cara Install 👾
 1. Clone repository ini.
 2. Pindahkan folder project ke dalam folder `www` pada Laragon.
