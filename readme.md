@@ -46,8 +46,9 @@ ResepoItaliano/
 ```
 
 ## Demo Aplikasi
+Klik GIF untuk melihat full video
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/GkqchF9lrTc?si=biMbi65buxcwN3mg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![Tonton Full di youtube](/public/images/demo.gif)](https://youtu.be/GkqchF9lrTc?feature=shared)
 
 ## Cara Install 👾
 1. Clone repository ini.
